@@ -2,4 +2,7 @@
 .idea
 .vscode
 
+# sys
+.DS_Store
+
 node_modules
