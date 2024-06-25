@@ -1,0 +1,5 @@
+# editor config
+.idea
+.vscode
+
+node_modules

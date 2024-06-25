@@ -1,0 +1,65 @@
+{
+  "name": "web-page-shelf",
+  "author": "Ray-D-Song",
+  "homepage_url": "https://github.com/ray-d-song/web-page-shelf",
+  "icons": {
+    "16": "package/resource/icon_16.png",
+    "48": "package/resource/icon_48.png",
+    "64": "package/resource/icon_64.png",
+    "128": "package/resource/icon_128.png"
+  },
+  "description": "SingleFile with categories and exhibition pages",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-frames.js",
+        "lib/single-file-extension-frames.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-bootstrap.js",
+        "lib/single-file-extension-bootstrap.js",
+        "lib/single-file-infobar.js"
+      ],
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "web_accessible_resources": [
+    "lib/single-file-hooks-frames.js"
+  ],
+  "permissions": [
+    "activeTab",
+    "<all_urls>"
+  ],
+  "sidebar_action": {
+    "browser_style": true,
+    "default_title": "web-page-shelf",
+    "default_panel": "package/page/panel/index.html",
+    "default_icon": "package/resource/icon_128.png",
+    "open_at_install": false
+  },
+  "options_ui": {
+    "browser_style": true,
+    "page": "package/page/option/index.html",
+    "open_in_tab": false
+  }
+}
