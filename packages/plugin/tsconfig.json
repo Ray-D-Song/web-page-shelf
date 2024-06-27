@@ -9,5 +9,5 @@
     ],
     "outDir": "./dist/plugin"
   },
-  "include": ["*.ts", "./**/*.tsx", "./**/*.ts"]
+  "include": ["*.ts", "./**/*.tsx", "./**/*.ts", "./**/*.json"]
 }

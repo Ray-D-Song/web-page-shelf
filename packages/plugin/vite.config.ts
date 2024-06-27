@@ -13,4 +13,11 @@ export default defineConfig({
   build: {
     outDir: 'extension',
   },
+  server: {
+    strictPort: true,
+    port: 5173,
+    hmr: {
+      clientPort: 5173
+    },
+  },
 })
