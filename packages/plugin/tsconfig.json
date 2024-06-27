@@ -9,5 +9,5 @@
     ],
     "outDir": "./dist/plugin"
   },
-  "include": ["*.ts", "./**/*.tsx", "./**/*.ts", "./**/*.json"]
+  "include": ["*.ts", "./**/*.tsx", "./**/*.ts", "./**/*.json", "../../unocss.config.ts"]
 }

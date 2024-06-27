@@ -12,15 +12,7 @@
     "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
   "devDependencies": {
-    "@crxjs/vite-plugin": "2.0.0-beta.23",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "unocss": "^0.61.0"
+    "@crxjs/vite-plugin": "2.0.0-beta.23"
   }
 }
