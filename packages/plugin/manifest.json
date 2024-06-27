@@ -14,5 +14,75 @@
   "action": {
     "default_icon": "assets/icon-512.png",
     "default_popup": "popup/index.html"
-  }
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-frames.js",
+        "lib/single-file-extension-frames.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/single-file-hooks-frames.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-bootstrap.js",
+        "lib/single-file-extension-core.js",
+        "lib/single-file.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScripts/content.tsx"
+      ]
+    }
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "lib/single-file-hooks-frames.js"
+      ]
+    }
+  ]
 }
