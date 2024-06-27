@@ -15,6 +15,7 @@
     "skipLibCheck": true /* Ensure that casing is correct in imports. */
   },
   "references": [
-    { "path": "./packages/server" }
+    { "path": "./packages/server" },
+    { "path": "./packages/plugin" }
   ]
 }

@@ -1,5 +1,6 @@
 {
   "name": "plugin",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "author": "",
@@ -7,6 +8,19 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "2.0.0-beta.23",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "unocss": "^0.61.0"
   }
 }
