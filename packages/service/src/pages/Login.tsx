@@ -1,12 +1,11 @@
-import { Hono } from 'hono'
-import { renderer } from './renderer'
+import { render, useState } from 'hono/jsx/dom'
+import useSWR from 'swr'
+import fetcher from '../utils/fetcher'
 
-const app = new Hono()
-
-app.use(renderer)
-
-app.get('/', (c) => {
-  return c.render(
+function Login() {
+  // const {data} = useSWR('/hello', fetcher)
+  const a = useState('a')
+  return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 mt-1/10">
       <div className="mx-auto max-w-lg bg-white p-10 shadow-sm rounded-xl">
         <h1 className="text-center text-3xl font-bold text-black sm:text-3xl">Web Page Shelf</h1>
@@ -87,6 +86,7 @@ app.get('/', (c) => {
             <button
               type="submit"
               className="block w-1/3 rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white"
+              onClick={() => window.alert('click')}
             >
               Sign in
             </button>
@@ -100,6 +100,8 @@ app.get('/', (c) => {
       </div>
     </div>
   )
-})
+}
 
-export default app
+const root = document.getElementById('root')
+if(root)
+  render(<Login />, root)
