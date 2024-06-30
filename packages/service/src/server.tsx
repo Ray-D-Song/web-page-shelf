@@ -1,7 +1,16 @@
 import { Hono } from 'hono'
+import { stream } from 'hono/streaming'
 import { renderToString } from 'react-dom/server'
+import pages from './api/pages'
 
-const app = new Hono()
+export type Bindings = {
+  // If you set another name in wrangler.toml as the value for 'binding',
+  // replace "DB" with the variable name you defined.
+  DB: D1Database
+  MY_BUCKET: R2Bucket
+}
+
+const app = new Hono<{ Bindings: Bindings }>()
 
 app.get('/', (c) => {
   return c.html(
@@ -34,10 +43,7 @@ app.get('/', (c) => {
   )
 })
 
-app.get('/hello', (c) => {
-  return c.json({
-    msg: 'Hello, world',
-  })
-})
+
+app.route('/pages', pages)
 
 export default app
