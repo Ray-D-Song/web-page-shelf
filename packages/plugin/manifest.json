@@ -64,7 +64,7 @@
     }
   ],
   "background": {
-    "page": "background.html",
+    "service_worker": "background/background.ts",
     "persistent": false
   },
   "permissions": [
