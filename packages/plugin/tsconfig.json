@@ -7,15 +7,15 @@
     "types": [
       "vite/client"
     ],
-    "outDir": "./dist/plugin",
+    "outDir": "./dist/plugin"
   },
   "include": [
-    "*.ts", 
-    "./**/*.tsx", 
-    "./**/*.ts", 
-    "./**/*.json", 
+    "*.ts",
+    "./**/*.tsx",
+    "./**/*.ts",
+    "./**/*.json",
     "../../unocss.config.ts",
     "../**/*.js",
-    "../**/*.min.js",
+    "../**/*.min.js"
   ]
 }

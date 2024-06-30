@@ -4,6 +4,7 @@ export default antfu({
   unocss: true,
   react: true,
   ignores: [
-    'lib',
+    '**/lib',
+    '**/extension',
   ],
 })

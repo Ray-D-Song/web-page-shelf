@@ -12,11 +12,11 @@
     "outDir": "./dist/main",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
-  "exclude": ["unocss.config.ts"],
   "references": [
     { "path": "./packages/service" },
     { "path": "./packages/plugin" }
-  ]
+  ],
+  "exclude": ["unocss.config.ts"]
 }

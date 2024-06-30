@@ -1,27 +1,28 @@
-if(!import.meta.env.DEV) {
+import { createRoot } from 'react-dom/client'
+import useSWR from 'swr'
+import fetcher from './utils/fetcher'
+
+if (!import.meta.env.DEV) {
   import ('./style/reset.css')
   import ('./style/uno.css')
   import ('./style/util.css')
 }
-import {createRoot} from 'react-dom/client'
-import useSWR from 'swr'
-import fetcher from './utils/fetcher'
 
 function Login() {
-
-  const {data} = useSWR('/hello', fetcher)
+  const { data } = useSWR('/hello', fetcher)
 
   return (
-    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 mt-1/10">
-      <div className="mx-auto max-w-lg bg-white p-10 shadow-sm rounded-xl">
-        <h1 className="text-center text-3xl font-bold text-black sm:text-3xl">Web Page Shelf</h1>
+    <div className="mx-auto mt-1/10 max-w-screen-xl px-4 py-16 lg:px-8 sm:px-6">
+      <div className="mx-auto max-w-lg rounded-xl bg-white p-10 shadow-sm">
+        <h1 className="text-center text-3xl text-black font-bold sm:text-3xl">Web Page Shelf</h1>
 
         <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-          Web page download, store, archive<br />
+          Web page download, store, archive
+          <br />
           use cloudflare or self-host
         </p>
 
-        <form action="#" className="mb-0 mt-6 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8">
+        <form action="#" className="mb-0 mt-6 rounded-lg p-4 space-y-4 lg:p-8 sm:p-6">
           <p className="text-center text-lg font-medium">Sign in to your account</p>
 
           <div>
@@ -30,11 +31,11 @@ function Login() {
             <div className="relative">
               <input
                 type="email"
-                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                className="w-full border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
               />
 
-              <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
+              <span className="absolute end-0 inset-y-0 grid place-content-center px-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="size-4 text-gray-400"
@@ -59,11 +60,11 @@ function Login() {
             <div className="relative">
               <input
                 type="password"
-                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                className="w-full border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
               />
 
-              <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
+              <span className="absolute end-0 inset-y-0 grid place-content-center px-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="size-4 text-gray-400"
@@ -91,7 +92,7 @@ function Login() {
           <div className="w-full flex justify-center">
             <button
               type="submit"
-              className="block w-1/3 rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white"
+              className="block w-1/3 rounded-lg bg-gray-900 px-5 py-3 text-sm text-white font-medium"
               onClick={() => window.alert('click')}
             >
               Sign in
@@ -109,5 +110,5 @@ function Login() {
 }
 
 const root = document.getElementById('root')
-if(root)
+if (root)
   createRoot(root).render(<Login />)

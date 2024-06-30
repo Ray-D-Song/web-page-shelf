@@ -1,28 +1,28 @@
-import { saveFile } from "./file";
+import { saveFile } from './file'
 
 declare const extension: {
   getPageData: (options: {
-    removeHiddenElements: boolean;
-    removeUnusedStyles: boolean;
-    removeUnusedFonts: boolean;
-    removeImports: boolean;
-    blockScripts: boolean;
-    blockAudios: boolean;
-    blockVideos: boolean;
-    compressHTML: boolean;
-    removeAlternativeFonts: boolean;
-    removeAlternativeMedias: boolean;
-    removeAlternativeImages: boolean;
-    groupDuplicateImages: boolean;
+    removeHiddenElements: boolean
+    removeUnusedStyles: boolean
+    removeUnusedFonts: boolean
+    removeImports: boolean
+    blockScripts: boolean
+    blockAudios: boolean
+    blockVideos: boolean
+    compressHTML: boolean
+    removeAlternativeFonts: boolean
+    removeAlternativeMedias: boolean
+    removeAlternativeImages: boolean
+    groupDuplicateImages: boolean
   }) => Promise<{
-    content: string;
-    title: string;
-    filename: string;
-  }>;
-};
+    content: string
+    title: string
+    filename: string
+  }>
+}
 
 export async function getCurrentPageData() {
-  const href = window.location.href;
+  const href = window.location.href
   const { content, title, filename } = await extension.getPageData({
     removeHiddenElements: true,
     removeUnusedStyles: true,
@@ -35,8 +35,8 @@ export async function getCurrentPageData() {
     removeAlternativeFonts: true,
     removeAlternativeMedias: true,
     removeAlternativeImages: true,
-    groupDuplicateImages: true
-  });
+    groupDuplicateImages: true,
+  })
 
   return {
     content,

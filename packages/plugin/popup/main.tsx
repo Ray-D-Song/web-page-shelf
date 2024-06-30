@@ -11,5 +11,5 @@ if (!root) {
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <DownloadButton></DownloadButton>
-  </React.StrictMode>
+  </React.StrictMode>,
 )

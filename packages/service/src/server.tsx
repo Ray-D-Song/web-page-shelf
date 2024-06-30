@@ -7,30 +7,30 @@ app.get('/', (c) => {
   return c.html(
     renderToString(
       <html>
-      <head>
-        {
+        <head>
+          {
           import.meta.env.PROD
             ? (
               <>
                 <script type="module" src="/static/client.js"></script>
               </>
-            )
+              )
             : (
               <>
-                <link type="text/css" rel="stylesheet" href="/src/style/reset.css"/>
-                <link type="text/css" rel="stylesheet" href="/src/style/uno.css"/>
-                <link type="text/css" rel="stylesheet" href="/src/style/util.css"/>
+                <link type="text/css" rel="stylesheet" href="/src/style/reset.css" />
+                <link type="text/css" rel="stylesheet" href="/src/style/uno.css" />
+                <link type="text/css" rel="stylesheet" href="/src/style/util.css" />
                 <script type="module" src="/src/client.tsx"></script>
               </>
-            )
+              )
         }
-        <title>Web Page Shelf</title>
-      </head>
-      <body className="bg-gray-100 grid-background">
-      <div id="root"></div>
-      </body>
-      </html>
-    )
+          <title>Web Page Shelf</title>
+        </head>
+        <body className="grid-background bg-gray-100">
+          <div id="root"></div>
+        </body>
+      </html>,
+    ),
   )
 })
 
