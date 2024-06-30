@@ -2,13 +2,7 @@ import { Hono } from 'hono'
 import { stream } from 'hono/streaming'
 import { renderToString } from 'react-dom/server'
 import pages from './api/pages'
-
-export type Bindings = {
-  // If you set another name in wrangler.toml as the value for 'binding',
-  // replace "DB" with the variable name you defined.
-  DB: D1Database
-  MY_BUCKET: R2Bucket
-}
+import { Bindings } from './constants/binding'
 
 const app = new Hono<{ Bindings: Bindings }>()
 

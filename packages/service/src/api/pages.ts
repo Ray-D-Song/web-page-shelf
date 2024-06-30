@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import type { D1Database } from '@cloudflare/workers-types/experimental'
-import { Bindings } from '../server'
+import { Bindings } from '../constants/binding'
 
 const app = new Hono<{ Bindings: Bindings }>()
 

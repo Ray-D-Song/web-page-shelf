@@ -69,9 +69,15 @@ importers:
 
   packages/service:
     dependencies:
+      '@generouted/react-router':
+        specifier: ^1.19.5
+        version: 1.19.5(react-router-dom@6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@5.3.1(@types/node@20.14.8))
       hono:
         specifier: ^4.4.8
         version: 4.4.8
+      react-router-dom:
+        specifier: ^6.24.0
+        version: 6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20240529.0
@@ -704,6 +710,13 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
+  '@generouted/react-router@1.19.5':
+    resolution: {integrity: sha512-9m42I+F12VcpAWSYAAZco6qS1WLzvwLJ3L4EKy8swXsnebPbPDA2BFUHlWMohyx7pwC8CuxfJjewfUk3qTpYxQ==}
+    peerDependencies:
+      react: '>=18'
+      react-router-dom: '>=6'
+      vite: '>=4'
+
   '@hono/node-server@1.11.4':
     resolution: {integrity: sha512-8TOiiiAqcFC6f62P7M9p6adQREAlWdVi1awehAwgWW+3R65/rKzHnLARO/Hu/466z01VNViBoogqatqXJMyItA==}
     engines: {node: '>=18.14.1'}
@@ -782,6 +795,10 @@ packages:
 
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
+
+  '@remix-run/router@1.17.0':
+    resolution: {integrity: sha512-2D6XaHEVvkCn682XBnipbJjgZUU7xjLtA4dGJRBVUKpEaDYOZMENZoZjAOSb7qirxt5RupjzZxz4fK2FO+EFPw==}
+    engines: {node: '>=14.0.0'}
 
   '@rollup/pluginutils@4.2.1':
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
@@ -1775,6 +1792,11 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
+  generouted@1.19.5:
+    resolution: {integrity: sha512-hts4B0UhYzPKGmGsGhkbCclcZWAeTe3EKW6oLY4tfXMj/A/wk/QTzeYgJqHL9dJd5d0E8vUoqpV6TucH50I9Rw==}
+    peerDependencies:
+      vite: '>=3'
+
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -2309,6 +2331,19 @@ packages:
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
+
+  react-router-dom@6.24.0:
+    resolution: {integrity: sha512-960sKuau6/yEwS8e+NVEidYQb1hNjAYM327gjEyXlc6r3Skf2vtwuJ2l7lssdegD2YjoKG5l8MsVyeTDlVeY8g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  react-router@6.24.0:
+    resolution: {integrity: sha512-sQrgJ5bXk7vbcC4BxQxeNa5UmboFm35we1AFK0VvQaz9g0LzxEIuLOhHIoZ8rnu9BO21ishGeL9no1WB76W/eg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=16.8'
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
@@ -3444,6 +3479,14 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
+  '@generouted/react-router@1.19.5(react-router-dom@6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@5.3.1(@types/node@20.14.8))':
+    dependencies:
+      fast-glob: 3.3.2
+      generouted: 1.19.5(vite@5.3.1(@types/node@20.14.8))
+      react: 18.3.1
+      react-router-dom: 6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      vite: 5.3.1(@types/node@20.14.8)
+
   '@hono/node-server@1.11.4': {}
 
   '@hono/vite-cloudflare-pages@0.4.1(hono@4.4.8)':
@@ -3531,6 +3574,8 @@ snapshots:
   '@pkgr/core@0.1.1': {}
 
   '@polka/url@1.0.0-next.25': {}
+
+  '@remix-run/router@1.17.0': {}
 
   '@rollup/pluginutils@4.2.1':
     dependencies:
@@ -4797,6 +4842,10 @@ snapshots:
 
   function-bind@1.1.2: {}
 
+  generouted@1.19.5(vite@5.3.1(@types/node@20.14.8)):
+    dependencies:
+      vite: 5.3.1(@types/node@20.14.8)
+
   gensync@1.0.0-beta.2: {}
 
   get-caller-file@2.0.5: {}
@@ -5287,6 +5336,18 @@ snapshots:
   react-refresh@0.13.0: {}
 
   react-refresh@0.14.2: {}
+
+  react-router-dom@6.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@remix-run/router': 1.17.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router: 6.24.0(react@18.3.1)
+
+  react-router@6.24.0(react@18.3.1):
+    dependencies:
+      '@remix-run/router': 1.17.0
+      react: 18.3.1
 
   react@18.3.1:
     dependencies:

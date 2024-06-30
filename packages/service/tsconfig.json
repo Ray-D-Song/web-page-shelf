@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "lib": ["DOM"],
+    "lib": ["DOM.Iterable"],
     "types": [
       "@cloudflare/workers-types",
       "vite/client"
