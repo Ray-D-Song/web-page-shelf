@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { stream } from 'hono/streaming'
 import { renderToString } from 'react-dom/server'
 import pages from './api/pages'
 import { Bindings } from './constants/binding'
@@ -14,9 +13,7 @@ app.get('/', (c) => {
           {
           import.meta.env.PROD
             ? (
-              <>
-                <script type="module" src="/static/client.js"></script>
-              </>
+              <script type="module" src="/static/client.js"></script>
               )
             : (
               <>
@@ -36,7 +33,6 @@ app.get('/', (c) => {
     ),
   )
 })
-
 
 app.route('/pages', pages)
 
