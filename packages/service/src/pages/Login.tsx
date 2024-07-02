@@ -93,7 +93,7 @@ function Login() {
 
           <p className="text-center text-sm text-gray-500">
             No account?
-            <a className="underline" href="#/signup">Sign up</a>
+            <a className="underline" href="#signup">Sign up</a>
           </p>
         </form>
       </div>

@@ -6,6 +6,7 @@ import {
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import NotFound from './pages/404'
+import useNavGuard from './hooks/useNavGuard'
 
 const router = createHashRouter([
   {
@@ -17,14 +18,21 @@ const router = createHashRouter([
     element: <Login />,
   },
   {
-    path: '/Signup',
+    path: '/signup',
     element: <Signup />,
   },
   {
-    path: '/404',
+    path: '*',
     element: <NotFound />,
   },
 ])
+
+function App() {
+  useNavGuard()
+  return (
+    <RouterProvider router={router} />
+  )
+}
 
 if (!import.meta.env.DEV) {
   import ('./style/reset.css')
@@ -34,6 +42,6 @@ if (!import.meta.env.DEV) {
 const root = document.getElementById('root')
 if (root) {
   createRoot(root).render(
-    <RouterProvider router={router} />,
+    <App />
   )
 }

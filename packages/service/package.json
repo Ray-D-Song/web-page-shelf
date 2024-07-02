@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "hono": "^4.4.8",
-    "react-router-dom": "^6.24.0"
+    "react-router-dom": "^6.24.0",
+    "valtio": "^1.13.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
