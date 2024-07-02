@@ -38,11 +38,15 @@ export async function getCurrentPageData() {
     groupDuplicateImages: true,
   })
 
+  const descriptionList = document.getElementsByName('description')
+  const pageDesc = descriptionList?.[0]?.getAttribute('content') ?? ''
+
   return {
     content,
     title,
     filename,
     href,
+    pageDesc,
   }
 }
 

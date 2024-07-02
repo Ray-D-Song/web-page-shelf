@@ -1,7 +1,7 @@
 import '../styles'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import DownloadButton from './DownloadButton'
+import PopupContainer from './components/PopupContainer'
 
 const root = document.getElementById('root')
 if (!root) {
@@ -10,6 +10,6 @@ if (!root) {
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <DownloadButton></DownloadButton>
+    <PopupContainer></PopupContainer>
   </React.StrictMode>,
 )

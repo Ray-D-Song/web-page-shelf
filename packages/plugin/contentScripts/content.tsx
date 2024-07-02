@@ -1,17 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import DownloadButton from '../popup/DownloadButton'
+import { onMessage } from 'webext-bridge/content-script'
+import { getCurrentPageData } from '../utils/singleFile'
 
-const root = document.createElement('div')
-root.id = 'crx-root'
-root.style.position = 'fixed'
-root.style.bottom = '0'
-root.style.right = '0'
-document.body.appendChild(root)
-console.log('content script loaded')
-
-ReactDOM.createRoot(root).render(
-  <React.StrictMode>
-    <DownloadButton />
-  </React.StrictMode>,
-)
+onMessage('get-current-page-data', async () => {
+  console.log('get-current-page-data')
+  return await getCurrentPageData()
+})

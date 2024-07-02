@@ -1,5 +1,19 @@
+import type { ProtocolWithReturn } from 'webext-bridge'
+
 declare module 'webext-bridge' {
   export interface ProtocolMap {
-
+    'save-page': ProtocolWithReturn<{
+      content: string
+      title: string
+      href: string
+      folderPath: string
+      pageDesc: string
+    }, { success: boolean }>
+    'get-current-page-data': ProtocolWithReturn<{}, {
+      content: string
+      title: string
+      href: string
+      pageDesc: string
+    }>
   }
 }
