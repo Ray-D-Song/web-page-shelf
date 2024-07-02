@@ -4,23 +4,22 @@ import * as ev from 'email-validator'
 type CE = ChangeEvent<HTMLInputElement>
 
 function Signup() {
-
   const [form, setForm] = useState({
     email: '',
     password: '',
-    repeatPassword: ''
+    repeatPassword: '',
   })
   const handleChange = (e: CE) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setForm(prevForm => ({
       ...prevForm,
-      [name]: value
-    }));
+      [name]: value,
+    }))
   }
 
   const [formValid, setFormValid] = useState({
     isValidEmail: true,
-    isSamePwd: true
+    isSamePwd: true,
   })
   const handleCheck = (e: CE) => {
     switch (e.target.name) {
@@ -28,24 +27,23 @@ function Signup() {
       case 'repeatPassword':
         setFormValid(pre => ({
           ...pre,
-          isSamePwd: form.password === form.repeatPassword
+          isSamePwd: form.password === form.repeatPassword,
         }))
         break
       case 'email':
         setFormValid(pre => ({
           ...pre,
-          isValidEmail: ev.validate(form.email)
+          isValidEmail: ev.validate(form.email),
         }))
     }
   }
 
   const submitDisabled = useMemo(() => {
-    return form.email.length===0
-    || form.password.length===0
-    || !formValid.isSamePwd
-    || !formValid.isValidEmail
-  },
-  [form, formValid])
+    return form.email.length === 0
+      || form.password.length === 0
+      || !formValid.isSamePwd
+      || !formValid.isValidEmail
+  }, [form, formValid])
   const handleSignup = () => {
   }
 
@@ -141,7 +139,7 @@ function Signup() {
               <input
                 name="repeatPassword"
                 type="password"
-                className={`w-full border rounded-lg p-4 pe-12 text-sm shadow-sm ${formValid.isSamePwd?'border-gray-200':'border-red-600'}`}
+                className={`w-full border rounded-lg p-4 pe-12 text-sm shadow-sm ${formValid.isSamePwd ? 'border-gray-200' : 'border-red-600'}`}
                 placeholder="Confirm your password"
                 value={form.repeatPassword}
                 onChange={handleChange}

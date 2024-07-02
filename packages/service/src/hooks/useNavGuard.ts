@@ -18,8 +18,8 @@ function useNavGuard() {
   }, [])
 
   useEffect(() => {
-    if(whiteList.includes(currentHash))
-      return;
+    if (whiteList.includes(currentHash))
+      return
     if (!isAuth)
       window.location.hash = '#login'
   }, [currentHash])
