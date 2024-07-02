@@ -7,4 +7,8 @@ export default antfu({
     '**/lib',
     '**/extension',
   ],
+}, {
+  rules: {
+    'no-console': 'off'
+  }
 })

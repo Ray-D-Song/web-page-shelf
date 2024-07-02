@@ -11,7 +11,7 @@ function DownloadButton() {
 
   return (
     <div>
-      <button onClick={handleDownload}>
+      <button type='button' onClick={handleDownload}>
         Download
       </button>
     </div>

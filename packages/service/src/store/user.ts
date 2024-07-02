@@ -15,7 +15,7 @@ const userStore = proxy(
     "username": "",
     "email": "",
     "folders": {}
-  }`) as UserStore
+  }`) as UserStore,
 )
 
 subscribe(userStore, () => {
@@ -26,5 +26,5 @@ const isAuth = userStore.token.length !== 0
 
 export {
   userStore,
-  isAuth
+  isAuth,
 }
