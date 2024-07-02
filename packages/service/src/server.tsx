@@ -24,6 +24,7 @@ app.get('/', (c) => {
               </>
               )
         }
+          <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
           <title>Web Page Shelf</title>
         </head>
         <body className="grid-background bg-gray-100">

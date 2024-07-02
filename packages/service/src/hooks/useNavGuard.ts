@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { isAuth } from '../store/user'
+import { whiteList } from '@/constants/route'
 
 function useNavGuard() {
   const [currentHash, setCurrentHash] = useState(window.location.hash)
@@ -17,6 +18,8 @@ function useNavGuard() {
   }, [])
 
   useEffect(() => {
+    if(whiteList.includes(currentHash))
+      return;
     if (!isAuth)
       window.location.hash = '#login'
   }, [currentHash])

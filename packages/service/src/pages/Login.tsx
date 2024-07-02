@@ -23,7 +23,7 @@ function Login() {
             <div className="relative">
               <input
                 type="email"
-                className="w-full border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
+                className="w-full border border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
               />
 
@@ -52,7 +52,7 @@ function Login() {
             <div className="relative">
               <input
                 type="password"
-                className="w-full border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
+                className="w-full border border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
               />
 

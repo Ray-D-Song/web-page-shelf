@@ -8,6 +8,7 @@
     "deploy": "$npm_execpath run build && wrangler pages deploy"
   },
   "dependencies": {
+    "email-validator": "^2.0.4",
     "hono": "^4.4.8",
     "react-router-dom": "^6.24.0",
     "valtio": "^1.13.2"
