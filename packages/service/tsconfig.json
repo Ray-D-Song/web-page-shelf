@@ -4,6 +4,10 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "lib": ["DOM.Iterable", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "types": [
       "@cloudflare/workers-types",
       "vite/client"

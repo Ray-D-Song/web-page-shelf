@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import honoBuild from '@hono/vite-cloudflare-pages'
 import devServer from '@hono/vite-dev-server'
 import adapter from '@hono/vite-dev-server/cloudflare'
@@ -5,19 +6,28 @@ import { UserConfig, defineConfig } from 'vite'
 import UnoCSS from '@unocss/postcss'
 import React from '@vitejs/plugin-react'
 
+const defaultConfig: UserConfig = {
+  css: {
+    postcss: {
+      plugins: [
+        UnoCSS(),
+      ],
+    },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
+}
+
 export default defineConfig(({ mode }): UserConfig => {
   /**
    * TODO: global config and resolve alias
    */
   if (mode === 'client') {
     return {
-      css: {
-        postcss: {
-          plugins: [
-            UnoCSS(),
-          ],
-        },
-      },
+      ...defaultConfig,
       build: {
         rollupOptions: {
           input: 'src/client.tsx',
@@ -35,13 +45,7 @@ export default defineConfig(({ mode }): UserConfig => {
   }
 
   return {
-    css: {
-      postcss: {
-        plugins: [
-          UnoCSS(),
-        ],
-      },
-    },
+    ...defaultConfig,
     plugins: [
       honoBuild({
         entry: 'src/server.tsx',
