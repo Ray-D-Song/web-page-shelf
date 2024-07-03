@@ -5,7 +5,8 @@
     "jsxImportSource": "react",
     "lib": ["DOM"],
     "types": [
-      "vite/client"
+      "vite/client",
+      "@types/webextension-polyfill"
     ],
     "outDir": "./dist/plugin"
   },
