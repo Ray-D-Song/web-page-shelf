@@ -15,5 +15,7 @@ declare module 'webext-bridge' {
       href: string
       pageDesc: string
     }>
+    'get-server-url': ProtocolWithReturn<{}, { serverUrl: string }>
+    'set-server-url': ProtocolWithReturn<{ url: string }, { success: boolean }>
   }
 }

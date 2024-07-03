@@ -1,7 +1,25 @@
+import Browser from 'webextension-polyfill'
 import '../lib/browser-polyfill.min.js'
 import '../lib/single-file-background.js'
-
 import { onMessage } from 'webext-bridge/background'
+
+/* global RequestInit */
+async function request(url: string, options?: RequestInit | undefined) {
+  const { serverUrl } = await Browser.storage.local.get('serverUrl')
+  return fetch(serverUrl + url, options)
+}
+
+onMessage('set-server-url', async ({ data: { url } }) => {
+  const serverUrl = url.endsWith('/') ? url.slice(0, -1) : url
+  await Browser.storage.local.set({ serverUrl })
+  return {
+    success: true,
+  }
+})
+onMessage('get-server-url', async () => {
+  const { serverUrl } = await Browser.storage.local.get('serverUrl')
+  return { serverUrl }
+})
 
 onMessage('save-page', async ({ data }) => {
   const { href, title, pageDesc, folderPath, content } = data
@@ -13,7 +31,7 @@ onMessage('save-page', async ({ data }) => {
   form.append('folderPath', folderPath)
   form.append('pageFile', new Blob([content], { type: 'text/html' }))
 
-  const response = await fetch('http://localhost:5173/pages/uploadNewPage', {
+  const response = await request('/pages/uploadNewPage', {
     method: 'PUT',
     body: form,
   })
@@ -25,7 +43,7 @@ onMessage('save-page', async ({ data }) => {
 })
 
 onMessage('get-pages', async () => {
-  const response = await fetch('http://localhost:5173/pages/getPages')
+  const response = await request('/pages/getPages')
   if (response.ok) {
     const json = await response.json()
     return json
