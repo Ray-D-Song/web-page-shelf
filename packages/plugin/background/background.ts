@@ -50,3 +50,7 @@ onMessage('get-pages', async () => {
   }
   return []
 })
+
+onMessage('is-login', async () => {
+  return false
+})

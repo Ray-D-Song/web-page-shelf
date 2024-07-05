@@ -3,38 +3,71 @@ import { sendMessage } from 'webext-bridge/popup'
 import UploadPageForm from './UploadPageForm'
 
 function PopupContainer() {
-  const [activeTab, setActiveTab] = useState<'page' | 'setting'>('page')
+  const [activeTab, setActiveTab] = useState<'page' | 'setting' | 'login'>('login')
   const tabs = {
     page: <SavePageTab />,
     setting: <SettingTab />,
+    login: <LoginTab />,
+  }
+  const tabsHeader = {
+    page: (
+      <button
+        type="button"
+        onClick={() => setActiveTab('page')}
+        className="rounded-lg p-2"
+      >
+        <div className="i-mdi-arrow-left"></div>
+      </button>
+    ),
+    setting: (
+      <button
+        type="button"
+        onClick={() => setActiveTab('setting')}
+        className="rounded-lg p-2"
+      >
+        <div className="i-mdi-settings"></div>
+      </button>
+    ),
+    login: (
+      <div></div>
+    ),
   }
 
   return (
     <div className="h-sm w-xs p-sm space-y-2">
       <div className="">
-        {
-          activeTab === 'setting'
-            ? (
-              <button
-                type="button"
-                onClick={() => setActiveTab('page')}
-                className="rounded-lg p-2"
-              >
-                <div className="i-mdi-arrow-left"></div>
-              </button>
-              )
-            : (
-              <button
-                type="button"
-                onClick={() => setActiveTab('setting')}
-                className="rounded-lg p-2"
-              >
-                <div className="i-mdi-settings"></div>
-              </button>
-              )
-        }
+        {tabsHeader[activeTab]}
       </div>
       {tabs[activeTab]}
+    </div>
+  )
+}
+
+function LoginTab() {
+  const [serverUrl, saveServerUrl] = useServerUrl()
+
+  function redirectToLoginPage() {
+    // open server url in new tab
+    window.open(serverUrl, '_blank')
+  }
+  return (
+    <div className="space-y-2">
+      <label>
+        Server URL
+      </label>
+      <input
+        type="text"
+        value={serverUrl}
+        onChange={saveServerUrl}
+        className="block w-full border-1 border-gray-200 rounded-md p-2 text-sm shadow-sm"
+      />
+      <button
+        type="button"
+        className="block w-full rounded-lg bg-gray-900 px-5 py-2 text-center text-sm text-white font-medium"
+        onClick={redirectToLoginPage}
+      >
+        Redirect to login page
+      </button>
     </div>
   )
 }
@@ -67,7 +100,7 @@ function SavePageTab() {
   )
 }
 
-function SettingTab() {
+function useServerUrl() {
   const [serverUrl, setServerUrl] = useState('')
   useEffect(() => {
     sendMessage('get-server-url', {}).then(({ serverUrl }) => {
@@ -75,7 +108,7 @@ function SettingTab() {
     })
   }, [])
 
-  function handleSaveServerUrl(e: ChangeEvent<HTMLInputElement>) {
+  function saveServerUrl(e: ChangeEvent<HTMLInputElement>) {
     setServerUrl(e.target.value)
     sendMessage('set-server-url', { url: e.target.value }).then(({ success }) => {
       if (success) {
@@ -86,6 +119,11 @@ function SettingTab() {
       }
     })
   }
+  return [serverUrl, saveServerUrl] as const
+}
+
+function SettingTab() {
+  const [serverUrl, handleSaveServerUrl] = useServerUrl()
   return (
     <div className="space-y-2">
       <label>
