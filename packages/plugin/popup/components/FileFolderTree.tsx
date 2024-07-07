@@ -24,7 +24,7 @@ function FileTreeNode({ node }: { node: TreeNode }) {
     node.children.length === 0
       ? (
         <li>
-          <span className="block rounded-lg bg-gray-100 px-4 py-2 text-sm text-gray-700 font-medium">
+          <span className="block rounded-lg bg-gray-100 px-4 py-2 text-sm text-gray-700 font-medium dark:bg-gray-800 dark:text-gray-200 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200">
             {node.name}
           </span>
         </li>
@@ -33,7 +33,7 @@ function FileTreeNode({ node }: { node: TreeNode }) {
         <li>
           <details open className="group [&_summary::-webkit-details-marker]:hidden">
             <summary
-              className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200"
             >
               <span className="text-sm font-medium">
                 {node.name}
