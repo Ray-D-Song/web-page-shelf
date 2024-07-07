@@ -60,11 +60,20 @@ function UploadPageForm({ setShowUploadForm }: { setShowUploadForm: (show: boole
   ]
 
   if (showLoading) {
-    return <div>Loading...</div>
+    return (
+      <div
+        className="h-full flex flex-col items-center justify-center text-sm text-gray-700 font-medium"
+      >
+        <div className="m-b-xl h-8 w-8 animate-spin border-4 border-color-gray-500 border-t-transparent rounded-full"></div>
+        <div>
+          Scrpaing Page Data...
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="space-y-2">
+    <div className="p-2 space-y-2">
       <label
         className="block p-x-1 text-sm text-black font-bold"
         htmlFor="title"
