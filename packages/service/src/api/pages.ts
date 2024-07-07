@@ -31,7 +31,7 @@ app.put(
     if (!value.title || typeof value.title !== 'string') {
       return 'Title is required'
     }
-    if (!value.pageDesc || typeof value.pageDesc !== 'string') {
+    if (typeof value.pageDesc !== 'string') {
       return 'Description is required'
     }
     if (!value.pageUrl || typeof value.pageUrl !== 'string') {
@@ -83,7 +83,13 @@ app.get(
   '/getPages',
   async (c) => {
     const { results } = await c.env.DB.prepare(
-      'SELECT * FROM pages',
+      `SELECT 
+        id, 
+        page_desc AS pageDesc,
+        title,
+        page_url AS pageUrl,
+        folder_path AS folderPath
+      FROM pages`,
     ).all()
     return c.json(results)
   },

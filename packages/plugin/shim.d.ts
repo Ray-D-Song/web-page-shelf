@@ -9,6 +9,16 @@ declare module 'webext-bridge' {
       folderPath: string
       pageDesc: string
     }, { success: boolean }>
+    'get-pages': ProtocolWithReturn<
+      {},
+      Array<{
+        id: number
+        title: string
+        pageDesc: string
+        pageUrl: string
+        folderPath: string
+      }>
+    >
     'get-current-page-data': ProtocolWithReturn<{}, {
       content: string
       title: string

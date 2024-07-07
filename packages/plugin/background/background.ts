@@ -6,7 +6,10 @@ import { onMessage } from 'webext-bridge/background'
 /* global RequestInit */
 async function request(url: string, options?: RequestInit | undefined) {
   const { serverUrl } = await Browser.storage.local.get('serverUrl')
-  return fetch(serverUrl + url, options)
+  return fetch(serverUrl + url, {
+    credentials: 'same-origin',
+    ...options,
+  })
 }
 
 onMessage('set-server-url', async ({ data: { url } }) => {
@@ -43,14 +46,19 @@ onMessage('save-page', async ({ data }) => {
 })
 
 onMessage('get-pages', async () => {
-  const response = await request('/pages/getPages')
-  if (response.ok) {
-    const json = await response.json()
-    return json
+  try {
+    const response = await request('/pages/getPages')
+    if (response.ok) {
+      const json = await response.json()
+      return json
+    }
+    return []
   }
-  return []
+  catch (e) {
+    return []
+  }
 })
 
 onMessage('is-login', async () => {
-  return false
+  return true
 })
