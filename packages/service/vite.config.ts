@@ -22,9 +22,7 @@ const defaultConfig: UserConfig = {
 }
 
 export default defineConfig(({ mode }): UserConfig => {
-  /**
-   * TODO: global config and resolve alias
-   */
+
   if (mode === 'client') {
     return {
       ...defaultConfig,

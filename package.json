@@ -21,9 +21,11 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "ahooks": "^3.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "swr": "^2.2.5"
+    "react-error-boundary": "^4.0.13",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.21.1",

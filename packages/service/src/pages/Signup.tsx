@@ -1,5 +1,9 @@
 import { ChangeEvent, useMemo, useState } from 'react'
 import * as ev from 'email-validator'
+import { useRequest } from 'ahooks'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import fetcher from '@/utils/fetcher'
 
 type CE = ChangeEvent<HTMLInputElement>
 
@@ -44,8 +48,19 @@ function Signup() {
       || !formValid.isSamePwd
       || !formValid.isValidEmail
   }, [form, formValid])
-  const handleSignup = () => {
-  }
+
+  const signupReq = fetcher('/auth/signup', {
+    method: 'POST',
+    body: form,
+  })
+  const navigate = useNavigate()
+  const {run: handleSignup} = useRequest(signupReq, {
+    manual: true,
+    onSuccess: () => {
+      toast.success('Sign up successfully')
+      navigate('#login')
+    }
+  })
 
   return (
     <div className="mx-auto mt-1/10 max-w-screen-xl px-4 py-16 lg:px-8 sm:px-6">
@@ -174,7 +189,7 @@ function Signup() {
 
           <div className="w-full flex justify-center">
             <button
-              type="submit"
+              type='button'
               className="mt-10 block w-1/3 rounded-lg bg-gray-900 px-5 py-3 text-sm text-white font-medium disabled:bg-gray-500"
               disabled={submitDisabled}
               onClick={handleSignup}

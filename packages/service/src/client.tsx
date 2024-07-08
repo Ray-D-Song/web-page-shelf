@@ -7,19 +7,22 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import NotFound from './pages/404'
 import useNavGuard from './hooks/useNavGuard'
+import MainLayout from './layout/MainLayout'
 
 const router = createHashRouter([
   {
     path: '/',
-    element: <Login />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/signup',
-    element: <Signup />,
+    element: <MainLayout />,
+    children: [
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/signup',
+        element: <Signup />,
+      },
+    ]
   },
   {
     path: '*',
