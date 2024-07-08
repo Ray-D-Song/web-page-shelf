@@ -54,12 +54,12 @@ function Signup() {
     body: form,
   })
   const navigate = useNavigate()
-  const {run: handleSignup} = useRequest(signupReq, {
+  const { run: handleSignup } = useRequest(signupReq, {
     manual: true,
     onSuccess: () => {
       toast.success('Sign up successfully')
       navigate('#login')
-    }
+    },
   })
 
   return (
@@ -189,7 +189,7 @@ function Signup() {
 
           <div className="w-full flex justify-center">
             <button
-              type='button'
+              type="button"
               className="mt-10 block w-1/3 rounded-lg bg-gray-900 px-5 py-3 text-sm text-white font-medium disabled:bg-gray-500"
               disabled={submitDisabled}
               onClick={handleSignup}

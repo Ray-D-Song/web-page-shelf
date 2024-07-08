@@ -35,13 +35,13 @@ app.post(
       .prepare(`INSERT INTO users (email, password) VALUES (?, ?)`)
       .bind(email, password)
       .run()
-    if(user.error) {
+    if (user.error) {
       return c.json({
         message: 'Failed to create user',
       })
     }
     return c.json({
-      message: 'User created'
+      message: 'User created',
     })
   },
 )

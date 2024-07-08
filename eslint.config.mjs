@@ -11,6 +11,6 @@ export default antfu({
   rules: {
     'no-console': 'off',
     'no-unused-vars': 'off',
-    'react-hooks/rules-of-hooks': 'warn'
+    'react-hooks/rules-of-hooks': 'warn',
   },
 })

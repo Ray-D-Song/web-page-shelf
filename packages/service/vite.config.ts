@@ -22,7 +22,6 @@ const defaultConfig: UserConfig = {
 }
 
 export default defineConfig(({ mode }): UserConfig => {
-
   if (mode === 'client') {
     return {
       ...defaultConfig,

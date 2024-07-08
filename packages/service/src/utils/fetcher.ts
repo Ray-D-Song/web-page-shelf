@@ -9,19 +9,19 @@ interface Options {
 function fetcher(url: string, {
   method = 'GET',
   body,
-  query
+  query,
 }: Options) {
   url = `/api${url}`
   return async () => {
-    if(body&&method!=='POST') {
+    if (body && method !== 'POST') {
       return toast.error('Body is only allowed for POST method')
     }
     let queryString = ''
-    if(query) {
+    if (query) {
       queryString = new URLSearchParams(query).toString()
       url += `?${queryString}`
     }
-    if(method==='GET') {
+    if (method === 'GET') {
       return fetch(url, {
         method,
         headers: {
@@ -40,7 +40,7 @@ function fetcher(url: string, {
 }
 
 async function processResponse(res: Response) {
-  if(!res.ok) {
+  if (!res.ok) {
     toast.error(await res.text())
   }
   return res.json()

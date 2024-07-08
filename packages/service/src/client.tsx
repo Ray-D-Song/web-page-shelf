@@ -22,7 +22,7 @@ const router = createHashRouter([
         path: '/signup',
         element: <Signup />,
       },
-    ]
+    ],
   },
   {
     path: '*',

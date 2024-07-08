@@ -13,7 +13,7 @@ pages_build_output_dir = "./dist"
 # bucket_name = "my-bucket"
 
 [[d1_databases]]
-binding = "DB" 
+binding = "DB"
 database_name = "web-page-shelf-dev"
 database_id = "ddc7b449-780b-43d9-9920-d7dcfde2407c"
 
