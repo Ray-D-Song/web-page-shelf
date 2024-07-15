@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { basicAuth } from 'hono/basic-auth'
 import { renderToString } from 'react-dom/server'
 import pages from './api/pages'
 import auth from './api/auth'

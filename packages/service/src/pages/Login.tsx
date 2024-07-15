@@ -1,7 +1,38 @@
-function Login() {
-  const handleLogin = () => {
+import { ChangeEvent, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useRequest } from 'ahooks'
+import { useNavigate } from 'react-router-dom'
+import fetcher from '@/utils/fetcher'
+import { userStore } from '@/store/user'
 
+type CE = ChangeEvent<HTMLInputElement>
+
+function Login() {
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  })
+  const handleChange = (e: CE) => {
+    const { name, value } = e.target
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value,
+    }))
   }
+
+  const loginReq = fetcher('/auth/login', {
+    method: 'POST',
+    body: form,
+  })
+  const navigate = useNavigate()
+  const { run: handleLogin } = useRequest(loginReq, {
+    manual: true,
+    onSuccess: (data) => {
+      console.log(data)
+      Object.assign(userStore, data)
+      toast.success('Login successfully')
+    },
+  })
 
   return (
     <div className="mx-auto mt-1/10 max-w-screen-xl px-4 py-16 lg:px-8 sm:px-6">
@@ -14,7 +45,7 @@ function Login() {
           use cloudflare or self-host
         </p>
 
-        <form action="#" className="mb-0 mt-6 rounded-lg p-4 space-y-4 lg:p-8 sm:p-6">
+        <form className="mb-0 mt-6 rounded-lg p-4 space-y-4 lg:p-8 sm:p-6">
           <p className="text-center text-lg font-medium">Sign in to your account</p>
 
           <div>
@@ -22,9 +53,12 @@ function Login() {
 
             <div className="relative">
               <input
+                name="email"
                 type="email"
                 className="w-full border border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
+                value={form.email}
+                onChange={handleChange}
               />
 
               <span className="absolute end-0 inset-y-0 grid place-content-center px-4">
@@ -51,9 +85,12 @@ function Login() {
 
             <div className="relative">
               <input
+                name="password"
                 type="password"
                 className="w-full border border-gray-200 rounded-lg p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
+                value={form.password}
+                onChange={handleChange}
               />
 
               <span className="absolute end-0 inset-y-0 grid place-content-center px-4">
@@ -83,7 +120,7 @@ function Login() {
 
           <div className="w-full flex justify-center">
             <button
-              type="submit"
+              type="button"
               className="block w-1/3 rounded-lg bg-gray-900 px-5 py-3 text-sm text-white font-medium"
               onClick={handleLogin}
             >

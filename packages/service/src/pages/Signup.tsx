@@ -58,7 +58,7 @@ function Signup() {
     manual: true,
     onSuccess: () => {
       toast.success('Sign up successfully')
-      navigate('#login')
+      navigate('/login')
     },
   })
 

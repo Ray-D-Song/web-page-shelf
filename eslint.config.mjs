@@ -12,5 +12,6 @@ export default antfu({
     'no-console': 'off',
     'no-unused-vars': 'off',
     'react-hooks/rules-of-hooks': 'warn',
+    'unused-imports/no-unused-vars': 'warn'
   },
 })

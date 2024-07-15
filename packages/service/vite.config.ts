@@ -5,6 +5,7 @@ import adapter from '@hono/vite-dev-server/cloudflare'
 import { UserConfig, defineConfig } from 'vite'
 import UnoCSS from '@unocss/postcss'
 import React from '@vitejs/plugin-react'
+import AutoImport from 'unplugin-auto-import/vite'
 
 const defaultConfig: UserConfig = {
   css: {
@@ -37,6 +38,12 @@ export default defineConfig(({ mode }): UserConfig => {
       },
       plugins: [
         React(),
+        AutoImport({
+          imports: [
+            'react',
+            'react-router-dom',
+          ],
+        }),
       ],
     }
   }

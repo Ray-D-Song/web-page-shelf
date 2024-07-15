@@ -6,7 +6,7 @@ interface Options {
   query?: Record<string, string>
 }
 
-function fetcher(url: string, {
+function fetcher<T>(url: string, {
   method = 'GET',
   body,
   query,
@@ -35,15 +35,24 @@ function fetcher(url: string, {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(res => processResponse(res))
+    }).then(res => processResponse<T>(res))
   }
 }
 
-async function processResponse(res: Response) {
+async function processResponse<T>(res: Response) {
   if (!res.ok) {
-    toast.error(await res.text())
+    toast.error('Network error')
   }
-  return res.json()
+  const content = <{
+    code: number
+    message: string
+    data: T
+  }> await res.json()
+  if (content.code !== 200) {
+    toast.error(content.message)
+    throw new Error(content.message)
+  }
+  return content.data
 }
 
 export default fetcher
