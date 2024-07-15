@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { sign } from 'hono/jwt'
+import { setCookie } from 'hono/cookie'
 import { Bindings } from '@/constants/binding'
 import result from '@/utils/result'
 import { User } from '@/sql/types'
@@ -91,9 +92,9 @@ app.post(
         expirationTtl: 60 * 60 * 24 * 14,
       })
       console.log(await c.env.KV.get(`token:${user.id}`))
+      setCookie(c, 'token', token)
       return c.json(result.success({
         id: user.id,
-        token,
         username: user.username,
         email: user.email,
         folders: JSON.parse(user.folders),
