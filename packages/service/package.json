@@ -19,7 +19,6 @@
     "@hono/vite-cloudflare-pages": "^0.4.1",
     "@hono/vite-dev-server": "^0.12.1",
     "@unocss/postcss": "^0.61.0",
-    "unplugin-auto-import": "^0.18.0",
     "wrangler": "^3.57.2"
   }
 }

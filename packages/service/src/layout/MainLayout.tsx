@@ -1,12 +1,10 @@
-import { Outlet } from 'react-router-dom'
-import toast, { Toaster } from 'react-hot-toast'
+import SideBar from '@/components/SideBar'
 
 function MainLayout() {
   return (
-    <>
-      <Toaster />
-      <Outlet />
-    </>
+    <main>
+      <SideBar />
+    </main>
   )
 }
 
