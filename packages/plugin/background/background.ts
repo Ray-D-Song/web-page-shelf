@@ -6,7 +6,7 @@ import { onMessage } from 'webext-bridge/background'
 /* global RequestInit */
 async function request(url: string, options?: RequestInit | undefined) {
   const { serverUrl } = await Browser.storage.local.get('serverUrl')
-  return fetch(serverUrl + url, {
+  return fetch(`${serverUrl}/api${url}`, {
     credentials: 'same-origin',
     ...options,
   })

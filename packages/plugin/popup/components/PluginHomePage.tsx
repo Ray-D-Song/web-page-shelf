@@ -19,10 +19,10 @@ function PluginHomePage({ setActivePage }: { setActivePage: (pageType: PageType)
         {showUploadForm
           ? <UploadPageForm setShowUploadForm={setShowUploadForm}></UploadPageForm>
           : (
-            <PageContainer
-              setShowUploadForm={setShowUploadForm}
-            >
-            </PageContainer>
+              <PageContainer
+                setShowUploadForm={setShowUploadForm}
+              >
+              </PageContainer>
             )}
 
       </div>
@@ -102,8 +102,14 @@ function PageSearch() {
 }
 
 function PageCard({ pageData }: { pageData: { id: number, pageDesc: string, title: string, pageUrl: string } }) {
+  async function handleClickPageCard() {
+    const { serverUrl } = await sendMessage('get-server-url', {})
+    window.open(`${serverUrl}/shelf?pageId=${pageData.id}`, '_blank')
+  }
+
   return (
     <article
+      onClick={handleClickPageCard}
       className="border border-gray-100 rounded-lg bg-white p-2 shadow-sm transition dark:border-gray-800 dark:bg-gray-900 dark:shadow-gray-700/25 hover:shadow-lg"
     >
       <a href="#">
