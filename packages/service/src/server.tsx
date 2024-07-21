@@ -59,7 +59,7 @@ app.get('/shelf', async (c) => {
     return c.redirect('/error')
   }
 
-  const content = await c.env.MY_BUCKET.get(page.content_url)
+  const content = await c.env.BUCKET.get(page.content_url)
   if (!content) {
     return c.redirect('/error')
   }
