@@ -60,7 +60,7 @@ app.put(
     const { title, pageDesc, pageUrl, pageFile, folderPath } = formData
     const folderPathWithRoot = `root/${folderPath ?? ''}`
     const contentUrl = crypto.randomUUID()
-    const uploadFileResult = await c.env.MY_BUCKET.put(contentUrl, pageFile)
+    const uploadFileResult = await c.env.BUCKET.put(contentUrl, pageFile)
     if (uploadFileResult === null) {
       return c.json({ status: 'error', message: 'Failed to upload file' })
     }

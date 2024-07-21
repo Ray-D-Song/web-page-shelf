@@ -4,7 +4,7 @@ export type Bindings = {
   JWT_SECRET: string
   DB: D1Database
   KV: KVNamespace
-  MY_BUCKET: R2Bucket
+  BUCKET: R2Bucket
 }
 
 export type Variables = {
