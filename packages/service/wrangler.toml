@@ -13,4 +13,3 @@ bucket_name = "web-page-shelf"
 binding = "DB"
 database_name = "web-page-shelf"
 database_id = "ddc7b449-780b-43d9-9920-d7dcfde2407c"
-

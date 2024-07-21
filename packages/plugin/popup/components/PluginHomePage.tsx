@@ -19,10 +19,10 @@ function PluginHomePage({ setActivePage }: { setActivePage: (pageType: PageType)
         {showUploadForm
           ? <UploadPageForm setShowUploadForm={setShowUploadForm}></UploadPageForm>
           : (
-              <PageContainer
-                setShowUploadForm={setShowUploadForm}
-              >
-              </PageContainer>
+            <PageContainer
+              setShowUploadForm={setShowUploadForm}
+            >
+            </PageContainer>
             )}
 
       </div>

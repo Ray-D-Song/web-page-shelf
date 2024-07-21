@@ -1,7 +1,7 @@
 import {
   Navigate,
   RouterProvider,
-  createHashRouter
+  createHashRouter,
 } from 'react-router-dom'
 import useNavGuard from './hooks/useNavGuard'
 import Login from './pages/Login'
@@ -39,9 +39,9 @@ const router = createHashRouter([
           {
             path: '/home',
             element: <Home />,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
   },
   {

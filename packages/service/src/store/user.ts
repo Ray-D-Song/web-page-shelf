@@ -20,7 +20,6 @@ subscribe(userStore, () => {
   localStorage.setItem('user', JSON.stringify(userStore))
 })
 
-
 export {
   userStore,
 }

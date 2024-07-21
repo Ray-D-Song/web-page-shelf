@@ -16,15 +16,15 @@ app.get('/', (c) => {
           {
             import.meta.env.PROD
               ? (
-                  <script type="module" src="/static/client.js"></script>
+                <script type="module" src="/static/client.js"></script>
                 )
               : (
-                  <>
-                    <link type="text/css" rel="stylesheet" href="/src/style/reset.css" />
-                    <link type="text/css" rel="stylesheet" href="/src/style/uno.css" />
-                    <link type="text/css" rel="stylesheet" href="/src/style/util.css" />
-                    <script type="module" src="/src/client.tsx"></script>
-                  </>
+                <>
+                  <link type="text/css" rel="stylesheet" href="/src/style/reset.css" />
+                  <link type="text/css" rel="stylesheet" href="/src/style/uno.css" />
+                  <link type="text/css" rel="stylesheet" href="/src/style/util.css" />
+                  <script type="module" src="/src/client.tsx"></script>
+                </>
                 )
           }
           <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
