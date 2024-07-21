@@ -1,9 +1,9 @@
 import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import type { D1Database } from '@cloudflare/workers-types/experimental'
-import { Bindings } from '../constants/binding'
+import { HonoTypeUserInformation } from '../constants/binding'
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<HonoTypeUserInformation>()
 
 interface InsertPageOptions {
   title: string
@@ -64,13 +64,14 @@ app.put(
     if (uploadFileResult === null) {
       return c.json({ status: 'error', message: 'Failed to upload file' })
     }
+    const userInfo = c.get('userInfo')
     const insertPageResult = await insertPage(c.env.DB, {
       title,
       pageDesc,
       pageUrl,
       contentUrl,
       folderPath: folderPathWithRoot,
-      userId: 1,
+      userId: userInfo.id,
     })
     if (!insertPageResult) {
       return c.json({ status: 'ok' })
@@ -82,6 +83,7 @@ app.put(
 app.get(
   '/getPages',
   async (c) => {
+    const userInfo = c.get('userInfo')
     const { results } = await c.env.DB.prepare(
       `SELECT 
         id, 
@@ -89,8 +91,11 @@ app.get(
         title,
         page_url AS pageUrl,
         folder_path AS folderPath
-      FROM pages`,
-    ).all()
+      FROM pages
+      WHERE user_id = ?`,
+    )
+      .bind(userInfo.id)
+      .all()
     return c.json(results)
   },
 )

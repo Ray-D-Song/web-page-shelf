@@ -6,3 +6,15 @@ export type Bindings = {
   KV: KVNamespace
   MY_BUCKET: R2Bucket
 }
+
+export type Variables = {
+  userInfo: {
+    id: number
+    email: string
+  }
+}
+
+export type HonoTypeUserInformation = {
+  Bindings: Bindings
+  Variables: Variables
+}

@@ -20,5 +20,6 @@ export default createMiddleware(async (c, next) => {
     return c.json(result.error(401, 'Unauthorized'))
   }
 
+  c.set('userInfo', decodedPayload)
   await next()
 })

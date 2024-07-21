@@ -2,11 +2,11 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { sign } from 'hono/jwt'
 import { setCookie } from 'hono/cookie'
-import { Bindings } from '@/constants/binding'
+import { HonoTypeUserInformation } from '@/constants/binding'
 import result from '@/utils/result'
 import { User } from '@/sql/types'
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<HonoTypeUserInformation>()
 
 app.post(
   '/signup',
