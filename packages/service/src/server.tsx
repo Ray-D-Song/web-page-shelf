@@ -1,8 +1,9 @@
 import { Hono } from 'hono'
 import { renderToString } from 'react-dom/server'
-import pages from './api/pages'
 import { Bindings, HonoTypeUserInformation } from './constants/binding'
 import { Page } from './sql/types'
+import pages from '@/api/pages'
+import users from '@/api/users'
 import token from '@/middlewares/token'
 import auth from '@/api/auth'
 
@@ -74,6 +75,7 @@ app.use('/api/*', token)
 const api = new Hono<HonoTypeUserInformation>()
 api.route('/pages', pages)
 api.route('/auth', auth)
+api.route('/users', users)
 
 app.route('/api', api)
 

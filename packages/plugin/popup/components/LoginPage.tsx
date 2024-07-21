@@ -28,8 +28,8 @@ function LoginPage({ setActivePage }: { setActivePage: (tab: PageType) => void }
   const [serverUrl, saveServerUrl] = useServerUrl()
 
   useEffect(() => {
-    sendMessage('is-login', {}).then((isLogin) => {
-      if (isLogin) {
+    sendMessage('get-user-info', {}).then((userInfo) => {
+      if (userInfo !== null) {
         setActivePage('home')
       }
     })
@@ -47,8 +47,8 @@ function LoginPage({ setActivePage }: { setActivePage: (tab: PageType) => void }
     window.open(serverUrl, '_blank')
 
     checkLoginInterval = setInterval(() => {
-      sendMessage('is-login', {}).then((isLogin) => {
-        if (isLogin) {
+      sendMessage('get-user-info', {}).then((userInfo) => {
+        if (userInfo !== null) {
           clearInterval(checkLoginInterval)
           setActivePage('home')
         }

@@ -59,6 +59,18 @@ onMessage('get-pages', async () => {
   }
 })
 
-onMessage('is-login', async () => {
-  return true
+onMessage('get-user-info', async () => {
+  try {
+    const response = await request('/users/getUserInfo')
+    if (response.ok) {
+      const json = await response.json()
+      if (json.code === 200) {
+        return json.data
+      }
+    }
+    return null
+  }
+  catch {
+    return null
+  }
 })

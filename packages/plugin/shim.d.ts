@@ -27,6 +27,6 @@ declare module 'webext-bridge' {
     }>
     'get-server-url': ProtocolWithReturn<{}, { serverUrl: string }>
     'set-server-url': ProtocolWithReturn<{ url: string }, { success: boolean }>
-    'is-login': ProtocolWithReturn<{}, boolean>
+    'get-user-info': ProtocolWithReturn<{}, { username: string, email: string, id: number } | null>
   }
 }
