@@ -6,10 +6,19 @@ import { onMessage } from 'webext-bridge/background'
 /* global RequestInit */
 async function request(url: string, options?: RequestInit | undefined) {
   const { serverUrl } = await Browser.storage.local.get('serverUrl')
-  return fetch(`${serverUrl}/api${url}`, {
+  const res = await fetch(`${serverUrl}/api${url}`, {
     credentials: 'same-origin',
     ...options,
   })
+  if (res.ok) {
+    const json = await res.json()
+    if (json.code === 200) {
+      return json.data
+    }
+
+    throw new Error(json.message)
+  }
+  throw new Error('Failed to fetch')
 }
 
 onMessage('set-server-url', async ({ data: { url } }) => {
@@ -34,41 +43,32 @@ onMessage('save-page', async ({ data }) => {
   form.append('folderPath', folderPath)
   form.append('pageFile', new Blob([content], { type: 'text/html' }))
 
-  const response = await request('/pages/uploadNewPage', {
-    method: 'PUT',
-    body: form,
-  })
-  if (response.ok) {
-    const json = await response.json()
-    return { success: json.status === 'ok' }
+  try {
+    await request('/pages/upload_new_page', {
+      method: 'POST',
+      body: form,
+    })
+    return { success: true }
   }
-  return { success: false }
+  catch {
+    return { success: false }
+  }
 })
 
 onMessage('get-pages', async () => {
   try {
-    const response = await request('/pages/getPages')
-    if (response.ok) {
-      const json = await response.json()
-      return json
-    }
-    return []
+    const pageList = await request('/pages/get_pages')
+    return pageList
   }
-  catch (e) {
+  catch {
     return []
   }
 })
 
 onMessage('get-user-info', async () => {
   try {
-    const response = await request('/users/getUserInfo')
-    if (response.ok) {
-      const json = await response.json()
-      if (json.code === 200) {
-        return json.data
-      }
-    }
-    return null
+    const userInfo = await request('/users/get_user_info')
+    return userInfo
   }
   catch {
     return null

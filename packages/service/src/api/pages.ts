@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import type { D1Database } from '@cloudflare/workers-types/experimental'
 import { HonoTypeUserInformation } from '../constants/binding'
+import result from '@/utils/result'
 
 const app = new Hono<HonoTypeUserInformation>()
 
@@ -25,8 +26,8 @@ async function insertPage(DB: D1Database, pageOptions: InsertPageOptions) {
   return insertResult.error
 }
 
-app.put(
-  '/uploadNewPage',
+app.post(
+  '/upload_new_page',
   validator('form', (value) => {
     if (!value.title || typeof value.title !== 'string') {
       return 'Title is required'
@@ -74,14 +75,14 @@ app.put(
       userId: userInfo.id,
     })
     if (!insertPageResult) {
-      return c.json({ status: 'ok' })
+      return c.json(result.success(null))
     }
-    return c.json({ status: 'error', message: 'Failed to insert page' })
+    return c.json(result.error(500, 'Failed to insert page'))
   },
 )
 
 app.get(
-  '/getPages',
+  '/get_pages',
   async (c) => {
     const userInfo = c.get('userInfo')
     const { results } = await c.env.DB.prepare(
@@ -96,7 +97,7 @@ app.get(
     )
       .bind(userInfo.id)
       .all()
-    return c.json(results)
+    return c.json(result.success(results))
   },
 )
 

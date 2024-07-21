@@ -6,7 +6,7 @@ import { User } from '@/sql/types'
 const app = new Hono<HonoTypeUserInformation>()
 
 app.get(
-  '/getUserInfo',
+  '/get_user_info',
   async (c) => {
     const userInfo = c.get('userInfo')
     const userResult = await c.env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userInfo.id).first() as User
