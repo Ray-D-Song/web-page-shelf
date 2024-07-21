@@ -28,9 +28,9 @@ function Login() {
   const { run: handleLogin } = useRequest(loginReq, {
     manual: true,
     onSuccess: (data) => {
-      console.log(data)
       Object.assign(userStore, data)
       toast.success('Login successfully')
+      navigate('/home')
     },
   })
 
