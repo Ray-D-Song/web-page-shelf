@@ -3,7 +3,7 @@ import SideBar from '@/components/SideBar'
 
 function MainLayout() {
   return (
-    <main className='flex'>
+    <main className="flex">
       <SideBar className="h-screen w-55 backdrop-blur-sm" />
       <Outlet />
     </main>

@@ -1,5 +1,5 @@
 interface SideBarProps {
-  className: string;
+  className: string
 }
 
 function SideBar({ className }: SideBarProps) {
