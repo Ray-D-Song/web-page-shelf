@@ -17,27 +17,18 @@ const router = createHashRouter([
     element: <GlobalLayout />,
     children: [
       {
-        path: '/',
-        element: <Navigate to="/main/home" replace />,
-      },
-      {
-        path: '/login',
+        path: 'login',
         element: <Login />,
       },
       {
-        path: '/signup',
+        path: 'signup',
         element: <Signup />,
       },
       {
-        path: '/main',
         element: <MainLayout />,
         children: [
           {
-            path: '/main',
-            element: <Navigate to="/main/home" replace />,
-          },
-          {
-            path: '/home',
+            path: 'home',
             element: <Home />,
           },
         ],

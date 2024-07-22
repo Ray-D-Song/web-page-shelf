@@ -1,6 +1,10 @@
-function SideBar() {
+interface SideBarProps {
+  className: string;
+}
+
+function SideBar({ className }: SideBarProps) {
   return (
-    <aside>
+    <aside className={className}>
       todo
     </aside>
   )

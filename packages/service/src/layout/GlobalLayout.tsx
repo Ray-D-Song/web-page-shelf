@@ -1,7 +1,12 @@
-import { Outlet } from 'react-router-dom'
-import toast, { Toaster } from 'react-hot-toast'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { useEffect } from 'react'
 
 function GlobalLayout() {
+  const nav = useNavigate()
+  useEffect(() => {
+    nav('/home')
+  }, [])
   return (
     <>
       <Toaster />
