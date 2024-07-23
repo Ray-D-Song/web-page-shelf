@@ -6,7 +6,7 @@ binding = "KV"
 id = "3c3cd6d35c2e43e8bf6b3e3973159790"
 
 [[r2_buckets]]
-binding = "R2"
+binding = "BUCKET"
 bucket_name = "web-page-shelf"
 
 [[d1_databases]]
