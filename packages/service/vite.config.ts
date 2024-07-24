@@ -17,6 +17,7 @@ const defaultConfig: UserConfig = {
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      '@global': resolve(__dirname, '../global'),
     },
   },
 }

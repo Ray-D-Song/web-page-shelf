@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import UnoCSS from 'unocss/vite'
 import react from '@vitejs/plugin-react'
@@ -12,6 +13,12 @@ export default defineConfig({
   ],
   build: {
     outDir: 'extension',
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+      '@global': resolve(__dirname, '../global'),
+    },
   },
   server: {
     strictPort: true,

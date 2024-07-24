@@ -21,7 +21,6 @@ app.get('/', (c) => {
                 )
               : (
                 <>
-                  <link type="text/css" rel="stylesheet" href="/src/style/reset.css" />
                   <link type="text/css" rel="stylesheet" href="/src/style/uno.css" />
                   <link type="text/css" rel="stylesheet" href="/src/style/util.css" />
                   <script type="module" src="/src/client.tsx"></script>
