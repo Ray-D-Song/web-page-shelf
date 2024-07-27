@@ -30,7 +30,7 @@ function UploadPageForm({ setShowUploadForm }: { setShowUploadForm: (show: boole
         pageDesc: pageData.pageDesc,
         content: pageData.content,
         href: pageData.href,
-        folderPath: '/',
+        folderPath: '/root',
       })
     }
     getPageData().finally(() => {
@@ -55,8 +55,8 @@ function UploadPageForm({ setShowUploadForm }: { setShowUploadForm: (show: boole
   }
 
   const folderOptions = [
-    { value: '/', label: '/' },
-    { value: '/folder2', label: '/Folder2' },
+    { value: '/root', label: '/' },
+    { value: '/root/folder2', label: '/Folder2' },
   ]
 
   if (showLoading) {

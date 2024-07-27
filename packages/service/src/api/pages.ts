@@ -59,7 +59,7 @@ app.post(
       return c.json({ status: 'error', message: formData })
     }
     const { title, pageDesc, pageUrl, pageFile, folderPath } = formData
-    const folderPathWithRoot = `root/${folderPath ?? ''}`
+    const folderPathWithRoot = folderPath ?? '/root'
     const contentUrl = crypto.randomUUID()
     const uploadFileResult = await c.env.BUCKET.put(contentUrl, await pageFile.arrayBuffer())
     if (uploadFileResult === null) {
