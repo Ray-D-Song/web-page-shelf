@@ -6,7 +6,7 @@
     "build": "vite build --mode client && vite build",
     "preview": "wrangler pages dev",
     "deploy": "$npm_execpath run build && wrangler pages deploy",
-    "init:local:db": "npx wrangler d1 execute web-page-shelf-dev --local --file=./src/sql/init.sql"
+    "init:wangler:local": "./scripts/init_wangler_local.sh"
   },
   "dependencies": {
     "email-validator": "^2.0.4",
@@ -19,6 +19,7 @@
     "@hono/vite-cloudflare-pages": "^0.4.1",
     "@hono/vite-dev-server": "^0.12.1",
     "@unocss/postcss": "^0.61.0",
+    "@web-page-shelf/global": "workspace:*",
     "wrangler": "^3.57.2"
   }
 }
