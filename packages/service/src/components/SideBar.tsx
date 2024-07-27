@@ -5,12 +5,11 @@ interface SideBarProps {
 }
 
 function SideBar({ className }: SideBarProps) {
-
   return (
     <div className={`${className} flex`}>
-      <div className="flex h-screen w-16 flex-col justify-between border-e bg-white">
+      <div className="h-screen w-16 flex flex-col justify-between border-e bg-white">
         <div>
-          <div className="inline-flex size-16 items-center justify-center">
+          <div className="size-16 inline-flex items-center justify-center">
             <span
               className="grid size-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
             >
@@ -23,7 +22,7 @@ function SideBar({ className }: SideBarProps) {
               <div className="py-4">
                 <a
                   href="#"
-                  className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-blue-700"
+                  className="group t relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-blue-700"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -46,14 +45,14 @@ function SideBar({ className }: SideBarProps) {
                   </svg>
 
                   <span
-                    className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                    className="invisible absolute start-full top-1/2 ms-4 rounded bg-gray-900 px-2 py-1.5 text-xs text-white font-medium group-hover:visible -translate-y-1/2"
                   >
                     General
                   </span>
                 </a>
               </div>
 
-              <ul className="space-y-1 border-t border-gray-100 pt-4">
+              <ul className="border-t border-gray-100 pt-4 space-y-1">
                 <li>
                   <a
                     href="#"
@@ -75,7 +74,7 @@ function SideBar({ className }: SideBarProps) {
                     </svg>
 
                     <span
-                      className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                      className="invisible absolute start-full top-1/2 ms-4 rounded bg-gray-900 px-2 py-1.5 text-xs text-white font-medium group-hover:visible -translate-y-1/2"
                     >
                       Teams
                     </span>
@@ -103,7 +102,7 @@ function SideBar({ className }: SideBarProps) {
                     </svg>
 
                     <span
-                      className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                      className="invisible absolute start-full top-1/2 ms-4 rounded bg-gray-900 px-2 py-1.5 text-xs text-white font-medium group-hover:visible -translate-y-1/2"
                     >
                       Billing
                     </span>
@@ -131,7 +130,7 @@ function SideBar({ className }: SideBarProps) {
                     </svg>
 
                     <span
-                      className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                      className="invisible absolute start-full top-1/2 ms-4 rounded bg-gray-900 px-2 py-1.5 text-xs text-white font-medium group-hover:visible -translate-y-1/2"
                     >
                       Invoices
                     </span>
@@ -159,7 +158,7 @@ function SideBar({ className }: SideBarProps) {
                     </svg>
 
                     <span
-                      className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                      className="invisible absolute start-full top-1/2 ms-4 rounded bg-gray-900 px-2 py-1.5 text-xs text-white font-medium group-hover:visible -translate-y-1/2"
                     >
                       Account
                     </span>
@@ -174,7 +173,7 @@ function SideBar({ className }: SideBarProps) {
           <form action="#">
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+              className="group relative w-full flex justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +191,7 @@ function SideBar({ className }: SideBarProps) {
               </svg>
 
               <span
-                className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                className="invisible absolute start-full top-1/2 ms-4 rounded bg-gray-900 px-2 py-1.5 text-xs text-white font-medium group-hover:visible -translate-y-1/2"
               >
                 Logout
               </span>
@@ -201,13 +200,13 @@ function SideBar({ className }: SideBarProps) {
         </div>
       </div>
 
-      <div className="flex h-screen flex-1 flex-col justify-between border-e bg-white">
+      <div className="h-screen flex flex-1 flex-col justify-between border-e bg-white">
         <div className="px-4 py-6">
           <ul className="mt-14 space-y-1">
             <li>
               <a
                 href="#"
-                className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+                className="block rounded-lg bg-gray-100 px-4 py-2 text-sm text-gray-700 font-medium"
               >
                 General
               </a>
@@ -236,11 +235,11 @@ function SideBar({ className }: SideBarProps) {
                   </span>
                 </summary>
 
-                <ul className="mt-2 space-y-1 px-4">
+                <ul className="mt-2 px-4 space-y-1">
                   <li>
                     <a
                       href="#"
-                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      className="block rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
                     >
                       Banned Users
                     </a>
@@ -249,7 +248,7 @@ function SideBar({ className }: SideBarProps) {
                   <li>
                     <a
                       href="#"
-                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      className="block rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
                     >
                       Calendar
                     </a>
@@ -261,7 +260,7 @@ function SideBar({ className }: SideBarProps) {
             <li>
               <a
                 href="#"
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                className="block rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
               >
                 Billing
               </a>
@@ -270,7 +269,7 @@ function SideBar({ className }: SideBarProps) {
             <li>
               <a
                 href="#"
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                className="block rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
               >
                 Invoices
               </a>
@@ -299,11 +298,11 @@ function SideBar({ className }: SideBarProps) {
                   </span>
                 </summary>
 
-                <ul className="mt-2 space-y-1 px-4">
+                <ul className="mt-2 px-4 space-y-1">
                   <li>
                     <a
                       href="#"
-                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      className="block rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
                     >
                       Details
                     </a>
@@ -312,7 +311,7 @@ function SideBar({ className }: SideBarProps) {
                   <li>
                     <a
                       href="#"
-                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      className="block rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
                     >
                       Security
                     </a>
@@ -322,7 +321,7 @@ function SideBar({ className }: SideBarProps) {
                     <form action="#">
                       <button
                         type="submit"
-                        className="w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700"
+                        className="[text-align:_inherit] w-full rounded-lg px-4 py-2 text-sm text-gray-500 font-medium hover:bg-gray-100 hover:text-gray-700"
                       >
                         Logout
                       </button>
