@@ -101,4 +101,34 @@ app.get(
   },
 )
 
+app.delete(
+  '/delete_page',
+  validator('query', (value) => {
+    if (!value.id || Number.isNaN(Number(value.id))) {
+      return 'ID is required'
+    }
+    return {
+      id: Number(value.id),
+    }
+  }),
+  async (c) => {
+    const query = c.req.valid('query')
+    if (typeof query === 'string') {
+      return c.json({ status: 'error', message: query })
+    }
+
+    const { id } = query
+    const userInfo = c.get('userInfo')
+    const deleteResult = await c.env.DB.prepare(
+      'DELETE FROM pages WHERE id = ? AND user_id = ?',
+    )
+      .bind(id, userInfo.id)
+      .run()
+    if (!deleteResult.error) {
+      return c.json(result.success(null))
+    }
+    return c.json(result.error(500, 'Failed to delete page'))
+  },
+)
+
 export default app

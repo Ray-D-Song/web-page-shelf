@@ -74,3 +74,16 @@ onMessage('get-user-info', async () => {
     return null
   }
 })
+
+onMessage('delete-page', async ({ data }) => {
+  try {
+    const params = new URLSearchParams({ id: data.id.toString() })
+    await request(`/pages/delete_page?${params.toString()}`, {
+      method: 'DELETE',
+    })
+    return { success: true }
+  }
+  catch {
+    return { success: false }
+  }
+})

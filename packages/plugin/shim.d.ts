@@ -19,6 +19,7 @@ declare module 'webext-bridge' {
         folderPath: string
       }>
     >
+    'delete-page': ProtocolWithReturn<{ id: number }, { success: boolean }>
     'get-current-page-data': ProtocolWithReturn<{}, {
       content: string
       title: string
