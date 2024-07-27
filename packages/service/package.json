@@ -6,7 +6,7 @@
     "build": "vite build --mode client && vite build",
     "preview": "wrangler pages dev",
     "deploy": "$npm_execpath run build && wrangler pages deploy",
-    "init:local:db": "npx wrangler d1 execute web-page-shelf-dev --local --file=./src/sql/init.sql"
+    "init:wangler:local": "./scripts/init_wangler_local.sh"
   },
   "dependencies": {
     "email-validator": "^2.0.4",
