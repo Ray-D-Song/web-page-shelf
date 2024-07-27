@@ -16,6 +16,9 @@
   "directories": {
     "lib": "lib"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
