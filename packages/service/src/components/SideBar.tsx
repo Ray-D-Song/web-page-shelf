@@ -7,7 +7,7 @@ interface SideBarProps {
 }
 
 function SideBar({ className }: SideBarProps) {
-  const [ dialogVisible, setDialogVisible ] = useState(false)
+  const [dialogVisible, setDialogVisible] = useState(false)
 
   return (
     <div className={`${className} flex`}>
@@ -137,7 +137,7 @@ function SideBar({ className }: SideBarProps) {
             </li>
 
             {
-              userStore.folders.children.map((folder) => (
+              userStore.folders.children.map(folder => (
                 <li key={folder.name}>
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary

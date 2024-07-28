@@ -10,7 +10,7 @@ interface UserStore {
   username: string
   email: string
   folders: {
-    name: 'root',
+    name: 'root'
     children: Folder[]
   }
 }

@@ -3,5 +3,5 @@ import { ChangeEvent } from 'react'
 type CE<T = HTMLInputElement> = ChangeEvent<T>
 
 export type {
-  CE
+  CE,
 }
