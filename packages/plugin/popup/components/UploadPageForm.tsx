@@ -1,8 +1,29 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { sendMessage } from 'webext-bridge/popup'
+import { Folder, UserInfo } from '@web-page-shelf/global/types/users'
 import Browser from 'webextension-polyfill'
 
-function UploadPageForm({ setShowUploadForm }: { setShowUploadForm: (show: boolean) => void }) {
+interface UploadPageFormProps {
+  setShowUploadForm: (show: boolean) => void
+  userInfo: UserInfo | null
+}
+
+function folder2Options(folders: Array<Folder>) {
+  console.log('folders', folders)
+  function recursive(folders: Array<Folder>, parentPath: string): Array<{ value: string, label: string }> {
+    return folders.reduce((acc, folder) => {
+      const path = `${parentPath}/${folder.name}`
+      acc.push({ value: path, label: path })
+      if (folder.children.length > 0) {
+        acc.push(...recursive(folder.children, path))
+      }
+      return acc
+    }, [] as Array<{ value: string, label: string }>)
+  }
+  return recursive(folders, '')
+}
+
+function UploadPageForm({ setShowUploadForm, userInfo }: UploadPageFormProps) {
   const [showLoading, setShowLoading] = useState(true)
   const [uploadPageData, setUploadPageData] = useState({
     title: '',
@@ -30,7 +51,7 @@ function UploadPageForm({ setShowUploadForm }: { setShowUploadForm: (show: boole
         pageDesc: pageData.pageDesc,
         content: pageData.content,
         href: pageData.href,
-        folderPath: '/',
+        folderPath: '/root',
       })
     }
     getPageData().finally(() => {
@@ -54,10 +75,8 @@ function UploadPageForm({ setShowUploadForm }: { setShowUploadForm: (show: boole
     setShowUploadForm(false)
   }
 
-  const folderOptions = [
-    { value: '/', label: '/' },
-    { value: '/folder2', label: '/Folder2' },
-  ]
+  const folderOptions = folder2Options(userInfo?.folders ?? [])
+  console.log('folderOptions', folderOptions)
 
   if (showLoading) {
     return (

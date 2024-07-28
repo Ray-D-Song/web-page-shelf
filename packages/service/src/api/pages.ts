@@ -59,7 +59,7 @@ app.post(
       return c.json({ status: 'error', message: formData })
     }
     const { title, pageDesc, pageUrl, pageFile, folderPath } = formData
-    const folderPathWithRoot = `root/${folderPath ?? ''}`
+    const folderPathWithRoot = folderPath ?? '/root'
     const contentUrl = crypto.randomUUID()
     const uploadFileResult = await c.env.BUCKET.put(contentUrl, await pageFile.arrayBuffer())
     if (uploadFileResult === null) {
@@ -84,6 +84,7 @@ app.post(
 app.get(
   '/get_pages',
   async (c) => {
+    const folder = c.req.query('folder')
     const userInfo = c.get('userInfo')
     const { results } = await c.env.DB.prepare(
       `SELECT 
@@ -93,11 +94,41 @@ app.get(
         page_url AS pageUrl,
         folder_path AS folderPath
       FROM pages
-      WHERE user_id = ?`,
+      WHERE user_id = ? ${folder ? 'AND folder_path = ?' : ''}`,
     )
-      .bind(userInfo.id)
+      .bind(userInfo.id, ...(folder ? [folder] : []))
       .all()
     return c.json(result.success(results))
+  },
+)
+
+app.delete(
+  '/delete_page',
+  validator('query', (value) => {
+    if (!value.id || Number.isNaN(Number(value.id))) {
+      return 'ID is required'
+    }
+    return {
+      id: Number(value.id),
+    }
+  }),
+  async (c) => {
+    const query = c.req.valid('query')
+    if (typeof query === 'string') {
+      return c.json({ status: 'error', message: query })
+    }
+
+    const { id } = query
+    const userInfo = c.get('userInfo')
+    const deleteResult = await c.env.DB.prepare(
+      'DELETE FROM pages WHERE id = ? AND user_id = ?',
+    )
+      .bind(id, userInfo.id)
+      .run()
+    if (!deleteResult.error) {
+      return c.json(result.success(null))
+    }
+    return c.json(result.error(500, 'Failed to delete page'))
   },
 )
 

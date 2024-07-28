@@ -1,26 +1,49 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { sendMessage } from 'webext-bridge/popup'
+import type { UserInfo } from '@web-page-shelf/global/types/users'
+import { useServerUrl } from '../composable/server'
 import UploadPageForm from './UploadPageForm'
-import FileFolderTree from './FileFolderTree'
+import FileFolderTree, { FolderTreeNode } from './FileFolderTree'
 import { PageType } from './PopupContainer'
+import Dialog from './Dialog'
 
 function PluginHomePage({ setActivePage }: { setActivePage: (pageType: PageType) => void }) {
   const [showUploadForm, setShowUploadForm] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [filterFolderPath, setFilterFolderPath] = useState<string | null>(null)
+  useEffect(() => {
+    sendMessage('get-user-info', {}).then((userInfo) => {
+      setUserInfo(userInfo)
+    })
+  }, [])
+
+  function handleFolderClick(folder: FolderTreeNode) {
+    setFilterFolderPath(folder.path)
+  }
 
   return (
     <div className="grid grid-cols-5 h-sm w-xl dark:bg-gray-800">
       <div className="col-span-2 h-sm rounded-lg">
         <SideMenu
           setActivePage={setActivePage}
+          userInfo={userInfo}
+          onFolderClick={handleFolderClick}
         >
         </SideMenu>
       </div>
       <div className="col-span-3 h-sm rounded-lg">
         {showUploadForm
-          ? <UploadPageForm setShowUploadForm={setShowUploadForm}></UploadPageForm>
+          ? (
+            <UploadPageForm
+              setShowUploadForm={setShowUploadForm}
+              userInfo={userInfo}
+            >
+            </UploadPageForm>
+            )
           : (
             <PageContainer
               setShowUploadForm={setShowUploadForm}
+              filterFolderPath={filterFolderPath}
             >
             </PageContainer>
             )}
@@ -30,14 +53,24 @@ function PluginHomePage({ setActivePage }: { setActivePage: (pageType: PageType)
   )
 }
 
-function PageContainer({ setShowUploadForm }: { setShowUploadForm: (show: boolean) => void }) {
+interface PageContainerProps {
+  setShowUploadForm: (show: boolean) => void
+  filterFolderPath?: string | null
+}
+
+function PageContainer({ setShowUploadForm, filterFolderPath }: PageContainerProps) {
   const [pageList, setPageList] = useState<Array<{ id: number, pageDesc: string, title: string, pageUrl: string }>>([])
 
   useEffect(() => {
-    sendMessage('get-pages', {}).then((pages) => {
+    sendMessage('get-pages', { filterFolderPath }).then((pages) => {
       setPageList(pages)
     })
-  }, [])
+  }, [filterFolderPath])
+
+  function removePageById(id: number) {
+    setPageList(pageList.filter(page => page.id !== id))
+  }
+
   return (
     <div
       className="h-full w-full p-sm space-y-1 dark:bg-gray-900"
@@ -57,6 +90,7 @@ function PageContainer({ setShowUploadForm }: { setShowUploadForm: (show: boolea
           <PageCard
             key={page.id}
             pageData={page}
+            removePageById={removePageById}
           >
           </PageCard>
         ))}
@@ -101,10 +135,30 @@ function PageSearch() {
   )
 }
 
-function PageCard({ pageData }: { pageData: { id: number, pageDesc: string, title: string, pageUrl: string } }) {
+function PageCard({ pageData, removePageById }: { pageData: { id: number, pageDesc: string, title: string, pageUrl: string }, removePageById: (id: number) => void }) {
   async function handleClickPageCard() {
     const { serverUrl } = await sendMessage('get-server-url', {})
     window.open(`${serverUrl}/shelf?pageId=${pageData.id}`, '_blank')
+  }
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  function openDialog() {
+    setIsDialogOpen(true)
+  }
+
+  function closeDialog() {
+    setIsDialogOpen(false)
+  }
+
+  function openComfirmRemoveDialog(event: React.MouseEvent) {
+    event.stopPropagation()
+    openDialog()
+  }
+
+  async function removePage() {
+    removePageById(pageData.id)
+    closeDialog()
+    await sendMessage('delete-page', { id: pageData.id })
   }
 
   return (
@@ -112,11 +166,37 @@ function PageCard({ pageData }: { pageData: { id: number, pageDesc: string, titl
       onClick={handleClickPageCard}
       className="border border-gray-100 rounded-lg bg-white p-2 shadow-sm transition dark:border-gray-800 dark:bg-gray-900 dark:shadow-gray-700/25 hover:shadow-lg"
     >
-      <a href="#">
+      <div className="flex items-center justify-between">
         <h3 className="text-lg text-gray-900 font-medium dark:text-white">
           {pageData.title}
         </h3>
-      </a>
+        <div
+          className="i-mdi-delete cursor-pointer"
+          onClick={openComfirmRemoveDialog}
+        >
+        </div>
+        <Dialog isOpen={isDialogOpen} title="" onClose={closeDialog}>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            Are you sure you want to remove this page?
+          </div>
+          <div className="mt-4 flex justify-end gap-2">
+            <button
+              type="button"
+              className="rounded-lg bg-gray-100 px-4 py-2 text-gray-600 dark:bg-gray-800 dark:text-gray-200"
+              onClick={closeDialog}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="rounded-lg bg-red-500 px-4 py-2 text-white"
+              onClick={removePage}
+            >
+              Remove
+            </button>
+          </div>
+        </Dialog>
+      </div>
 
       <p className="line-clamp-3 mt-2 text-sm/relaxed text-gray-500 dark:text-gray-400">
         {pageData.pageDesc}
@@ -125,10 +205,20 @@ function PageCard({ pageData }: { pageData: { id: number, pageDesc: string, titl
   )
 }
 
-function SideMenu({ setActivePage }: { setActivePage: (pageType: PageType) => void }) {
+interface SideMenuProps {
+  setActivePage: (pageType: PageType) => void
+  userInfo: UserInfo | null
+  onFolderClick?: (folder: FolderTreeNode) => void
+}
+
+function SideMenu({ setActivePage, userInfo, onFolderClick }: SideMenuProps) {
+  const [serverUrl] = useServerUrl()
+  function handleClickNode(node: FolderTreeNode) {
+    onFolderClick && onFolderClick(node)
+  }
   return (
     <div className="h-full w-full flex flex-col justify-between border-e bg-white dark:border-gray-800 dark:bg-gray-900">
-      <div className="px-2 py-3">
+      <div className="flex flex-1 flex-col overflow-hidden px-2 py-3">
         <button
           type="button"
           onClick={() => setActivePage('settings')}
@@ -137,26 +227,24 @@ function SideMenu({ setActivePage }: { setActivePage: (pageType: PageType) => vo
           <div className="i-mdi-settings"></div>
         </button>
 
-        <FileFolderTree
-          treeData={[{
-            name: 'root',
-            children: [
-              {
-                name: 'folder1',
-                children: [],
-              },
-            ],
-          }]}
-        />
+        <div className="custom-scrollbar flex-1 overflow-auto">
+          <FileFolderTree
+            treeData={userInfo?.folders ?? []}
+            onClickNode={handleClickNode}
+          />
+        </div>
+
       </div>
 
       <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 dark:border-gray-800">
-        <a href="#" className="flex items-center gap-2 bg-white p-4 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+        <a href={serverUrl} className="flex items-center gap-2 bg-white p-4 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-200">
           <div>
-            <p className="text-xs dark:text-white">
-              <strong className="block font-medium">Eric Frusciante</strong>
+            <p className="select-none text-xs dark:text-white">
+              <strong className="block font-medium">{userInfo?.username}</strong>
 
-              <span> eric@frusciante.com </span>
+              <span>
+                {userInfo?.email}
+              </span>
             </p>
           </div>
         </a>

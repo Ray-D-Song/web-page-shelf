@@ -55,9 +55,10 @@ onMessage('save-page', async ({ data }) => {
   }
 })
 
-onMessage('get-pages', async () => {
+onMessage('get-pages', async ({ data: { filterFolderPath } }) => {
   try {
-    const pageList = await request('/pages/get_pages')
+    const params = new URLSearchParams({ folder: filterFolderPath ?? '' })
+    const pageList = await request(`/pages/get_pages?${params.toString()}`)
     return pageList
   }
   catch {
@@ -72,5 +73,18 @@ onMessage('get-user-info', async () => {
   }
   catch {
     return null
+  }
+})
+
+onMessage('delete-page', async ({ data }) => {
+  try {
+    const params = new URLSearchParams({ id: data.id.toString() })
+    await request(`/pages/delete_page?${params.toString()}`, {
+      method: 'DELETE',
+    })
+    return { success: true }
+  }
+  catch {
+    return { success: false }
   }
 })
