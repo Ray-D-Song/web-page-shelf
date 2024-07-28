@@ -1,27 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { sendMessage } from 'webext-bridge/popup'
+import type { UserInfo } from '@web-page-shelf/global/types/users'
+import { useServerUrl } from '../composable/server'
 import UploadPageForm from './UploadPageForm'
-import FileFolderTree from './FileFolderTree'
+import FileFolderTree, { FolderTreeNode } from './FileFolderTree'
 import { PageType } from './PopupContainer'
 import Dialog from './Dialog'
 
 function PluginHomePage({ setActivePage }: { setActivePage: (pageType: PageType) => void }) {
   const [showUploadForm, setShowUploadForm] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [filterFolderPath, setFilterFolderPath] = useState<string | null>(null)
+  useEffect(() => {
+    sendMessage('get-user-info', {}).then((userInfo) => {
+      setUserInfo(userInfo)
+    })
+  }, [])
+
+  function handleFolderClick(folder: FolderTreeNode) {
+    setFilterFolderPath(folder.path)
+  }
 
   return (
     <div className="grid grid-cols-5 h-sm w-xl dark:bg-gray-800">
       <div className="col-span-2 h-sm rounded-lg">
         <SideMenu
           setActivePage={setActivePage}
+          userInfo={userInfo}
+          onFolderClick={handleFolderClick}
         >
         </SideMenu>
       </div>
       <div className="col-span-3 h-sm rounded-lg">
         {showUploadForm
-          ? <UploadPageForm setShowUploadForm={setShowUploadForm}></UploadPageForm>
+          ? (
+            <UploadPageForm
+              setShowUploadForm={setShowUploadForm}
+              userInfo={userInfo}
+            >
+            </UploadPageForm>
+            )
           : (
             <PageContainer
               setShowUploadForm={setShowUploadForm}
+              filterFolderPath={filterFolderPath}
             >
             </PageContainer>
             )}
@@ -31,14 +53,19 @@ function PluginHomePage({ setActivePage }: { setActivePage: (pageType: PageType)
   )
 }
 
-function PageContainer({ setShowUploadForm }: { setShowUploadForm: (show: boolean) => void }) {
+interface PageContainerProps {
+  setShowUploadForm: (show: boolean) => void
+  filterFolderPath?: string | null
+}
+
+function PageContainer({ setShowUploadForm, filterFolderPath }: PageContainerProps) {
   const [pageList, setPageList] = useState<Array<{ id: number, pageDesc: string, title: string, pageUrl: string }>>([])
 
   useEffect(() => {
-    sendMessage('get-pages', {}).then((pages) => {
+    sendMessage('get-pages', { filterFolderPath }).then((pages) => {
       setPageList(pages)
     })
-  }, [])
+  }, [filterFolderPath])
 
   function removePageById(id: number) {
     setPageList(pageList.filter(page => page.id !== id))
@@ -178,10 +205,20 @@ function PageCard({ pageData, removePageById }: { pageData: { id: number, pageDe
   )
 }
 
-function SideMenu({ setActivePage }: { setActivePage: (pageType: PageType) => void }) {
+interface SideMenuProps {
+  setActivePage: (pageType: PageType) => void
+  userInfo: UserInfo | null
+  onFolderClick?: (folder: FolderTreeNode) => void
+}
+
+function SideMenu({ setActivePage, userInfo, onFolderClick }: SideMenuProps) {
+  const [serverUrl] = useServerUrl()
+  function handleClickNode(node: FolderTreeNode) {
+    onFolderClick && onFolderClick(node)
+  }
   return (
     <div className="h-full w-full flex flex-col justify-between border-e bg-white dark:border-gray-800 dark:bg-gray-900">
-      <div className="px-2 py-3">
+      <div className="flex flex-1 flex-col overflow-hidden px-2 py-3">
         <button
           type="button"
           onClick={() => setActivePage('settings')}
@@ -190,26 +227,24 @@ function SideMenu({ setActivePage }: { setActivePage: (pageType: PageType) => vo
           <div className="i-mdi-settings"></div>
         </button>
 
-        <FileFolderTree
-          treeData={[{
-            name: 'root',
-            children: [
-              {
-                name: 'folder1',
-                children: [],
-              },
-            ],
-          }]}
-        />
+        <div className="custom-scrollbar flex-1 overflow-auto">
+          <FileFolderTree
+            treeData={userInfo?.folders ?? []}
+            onClickNode={handleClickNode}
+          />
+        </div>
+
       </div>
 
       <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 dark:border-gray-800">
-        <a href="#" className="flex items-center gap-2 bg-white p-4 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+        <a href={serverUrl} className="flex items-center gap-2 bg-white p-4 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-200">
           <div>
-            <p className="text-xs dark:text-white">
-              <strong className="block font-medium">Eric Frusciante</strong>
+            <p className="select-none text-xs dark:text-white">
+              <strong className="block font-medium">{userInfo?.username}</strong>
 
-              <span> eric@frusciante.com </span>
+              <span>
+                {userInfo?.email}
+              </span>
             </p>
           </div>
         </a>

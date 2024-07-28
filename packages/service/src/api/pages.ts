@@ -84,6 +84,7 @@ app.post(
 app.get(
   '/get_pages',
   async (c) => {
+    const folder = c.req.query('folder')
     const userInfo = c.get('userInfo')
     const { results } = await c.env.DB.prepare(
       `SELECT 
@@ -93,9 +94,9 @@ app.get(
         page_url AS pageUrl,
         folder_path AS folderPath
       FROM pages
-      WHERE user_id = ?`,
+      WHERE user_id = ? ${folder ? 'AND folder_path = ?' : ''}`,
     )
-      .bind(userInfo.id)
+      .bind(userInfo.id, ...(folder ? [folder] : []))
       .all()
     return c.json(result.success(results))
   },

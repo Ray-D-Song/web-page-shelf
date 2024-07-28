@@ -1,4 +1,5 @@
 import type { ProtocolWithReturn } from 'webext-bridge'
+import type { UserInfo } from '@web-page-shelf/global/types/users'
 
 declare module 'webext-bridge' {
   export interface ProtocolMap {
@@ -10,7 +11,9 @@ declare module 'webext-bridge' {
       pageDesc: string
     }, { success: boolean }>
     'get-pages': ProtocolWithReturn<
-      {},
+      {
+        filterFolderPath?: string | null
+      },
       Array<{
         id: number
         title: string
@@ -28,6 +31,6 @@ declare module 'webext-bridge' {
     }>
     'get-server-url': ProtocolWithReturn<{}, { serverUrl: string }>
     'set-server-url': ProtocolWithReturn<{ url: string }, { success: boolean }>
-    'get-user-info': ProtocolWithReturn<{}, { username: string, email: string, id: number } | null>
+    'get-user-info': ProtocolWithReturn<{}, UserInfo | null>
   }
 }
