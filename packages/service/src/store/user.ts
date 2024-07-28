@@ -1,10 +1,18 @@
 import { proxy, subscribe } from 'valtio'
 
+interface Folder {
+  name: string
+  children: Folder[]
+}
+
 interface UserStore {
   id: number
   username: string
   email: string
-  folders: Record<string, any>
+  folders: {
+    name: 'root'
+    children: Folder[]
+  }
 }
 
 const userStore = proxy(
@@ -12,7 +20,7 @@ const userStore = proxy(
     "id": 0,
     "username": "",
     "email": "",
-    "folders": {}
+    "folders": {"name": "root", "children": []}
   }`) as UserStore,
 )
 
