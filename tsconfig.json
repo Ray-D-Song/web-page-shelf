@@ -16,7 +16,8 @@
   },
   "references": [
     { "path": "./packages/service" },
-    { "path": "./packages/plugin" }
+    { "path": "./packages/plugin" },
+    { "path": "./packages/global" }
   ],
   "exclude": ["unocss.config.ts"]
 }

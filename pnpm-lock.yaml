@@ -80,6 +80,9 @@ importers:
       '@types/webextension-polyfill':
         specifier: ^0.10.7
         version: 0.10.7
+      '@web-page-shelf/global':
+        specifier: workspace:*
+        version: link:../global
       webext-bridge:
         specifier: ^6.0.1
         version: 6.0.1
