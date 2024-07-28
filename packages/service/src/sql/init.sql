@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL UNIQUE,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    folders TEXT NOT NULL DEFAULT '{"name": "root", "children": []}'
+    folders TEXT NOT NULL DEFAULT '[{"name": "root", "children": [{"name": "uncategorized", "children": []}]}]'
 );
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
