@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRequest } from 'ahooks'
 import { useNavigate } from 'react-router-dom'
-import { CE } from '@web-page-shelf/global/types/shortcuts'
+import type { CE } from '@web-page-shelf/global'
 import fetcher from '@/utils/fetcher'
 import { userStore } from '@/store/user'
 

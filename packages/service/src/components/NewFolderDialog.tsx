@@ -1,5 +1,5 @@
 import { MouseEvent, useState } from 'react'
-import { CE } from '@web-page-shelf/global/types/shortcuts'
+import type { CE } from '@web-page-shelf/global'
 import { userStore } from '@/store/user'
 
 interface NewFolderDialogProps {

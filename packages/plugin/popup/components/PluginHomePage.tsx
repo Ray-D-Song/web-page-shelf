@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { sendMessage } from 'webext-bridge/popup'
-import type { UserInfo } from '@web-page-shelf/global/types/users'
+import type { UserInfo } from '@web-page-shelf/global'
 import { useServerUrl } from '../composable/server'
 import UploadPageForm from './UploadPageForm'
 import FileFolderTree, { FolderTreeNode } from './FileFolderTree'

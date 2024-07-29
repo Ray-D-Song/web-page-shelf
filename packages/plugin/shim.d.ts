@@ -1,5 +1,5 @@
 import type { ProtocolWithReturn } from 'webext-bridge'
-import type { UserInfo } from '@web-page-shelf/global/types/users'
+import type { UserInfo } from '@web-page-shelf/global'
 
 declare module 'webext-bridge' {
   export interface ProtocolMap {

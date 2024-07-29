@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { sendMessage } from 'webext-bridge/popup'
-import { Folder, UserInfo } from '@web-page-shelf/global'
+import type { Folder, UserInfo } from '@web-page-shelf/global'
 import Browser from 'webextension-polyfill'
 
 interface UploadPageFormProps {
