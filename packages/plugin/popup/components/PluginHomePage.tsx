@@ -60,12 +60,13 @@ interface PageContainerProps {
 
 function PageContainer({ setShowUploadForm, filterFolderPath }: PageContainerProps) {
   const [pageList, setPageList] = useState<Array<{ id: number, pageDesc: string, title: string, pageUrl: string }>>([])
+  const [searchKeyWord, setSearchKeyWord] = useState('')
 
   useEffect(() => {
-    sendMessage('get-pages', { filterFolderPath }).then((pages) => {
+    sendMessage('get-pages', { filterFolderPath, search: searchKeyWord }).then((pages) => {
       setPageList(pages)
     })
-  }, [filterFolderPath])
+  }, [filterFolderPath, searchKeyWord])
 
   function removePageById(id: number) {
     setPageList(pageList.filter(page => page.id !== id))
@@ -76,7 +77,10 @@ function PageContainer({ setShowUploadForm, filterFolderPath }: PageContainerPro
       className="h-full w-full p-sm space-y-1 dark:bg-gray-900"
     >
       <div className="h-10 flex space-x-1">
-        <PageSearch></PageSearch>
+        <PageSearch
+          setSearchKeyWord={setSearchKeyWord}
+        >
+        </PageSearch>
         <button
           type="button"
           className="block w-20 rounded-lg bg-gray-900 px-5 py-2 text-center text-sm text-white font-medium dark:bg-gray-800 dark:text-gray-200"
@@ -99,7 +103,20 @@ function PageContainer({ setShowUploadForm, filterFolderPath }: PageContainerPro
   )
 }
 
-function PageSearch() {
+interface PageSearchProps {
+  setSearchKeyWord: (keyWord: string) => void
+}
+
+function PageSearch({ setSearchKeyWord }: PageSearchProps) {
+  const [keyWord, setKeyWord] = useState('')
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setKeyWord(event.target.value)
+  }
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === 'Enter') {
+      setSearchKeyWord(keyWord)
+    }
+  }
   return (
     <div className="relative w-280">
       <label htmlFor="Search" className="sr-only"> Search </label>
@@ -107,6 +124,9 @@ function PageSearch() {
       <input
         type="text"
         id="Search"
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={() => setSearchKeyWord(keyWord)}
         placeholder="Search page"
         className="w-full b-1 border-gray-200 rounded-md py-2.5 pe-10 ps-2.5 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:text-sm dark:text-white"
       />

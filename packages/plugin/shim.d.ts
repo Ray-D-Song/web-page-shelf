@@ -13,6 +13,7 @@ declare module 'webext-bridge' {
     'get-pages': ProtocolWithReturn<
       {
         filterFolderPath?: string | null
+        search?: string | null
       },
       Array<{
         id: number

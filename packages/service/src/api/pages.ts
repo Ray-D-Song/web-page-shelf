@@ -85,18 +85,30 @@ app.get(
   '/get_pages',
   async (c) => {
     const folder = c.req.query('folder')
+    const search = c.req.query('search')
+
     const userInfo = c.get('userInfo')
-    const { results } = await c.env.DB.prepare(
-      `SELECT 
+    let sql = `SELECT 
         id, 
         page_desc AS pageDesc,
         title,
         page_url AS pageUrl,
         folder_path AS folderPath
       FROM pages
-      WHERE user_id = ? ${folder ? 'AND folder_path = ?' : ''}`,
-    )
-      .bind(userInfo.id, ...(folder ? [folder] : []))
+      WHERE user_id = ?`
+    const bindParams: Array<string | number> = [userInfo.id]
+
+    if (folder) {
+      sql += 'AND folder_path = ?'
+      bindParams.push(folder)
+    }
+    if (search) {
+      sql += 'AND title LIKE ?'
+      bindParams.push(`%${search}%`)
+    }
+    const { results } = await c.env.DB
+      .prepare(sql)
+      .bind(...bindParams)
       .all()
     return c.json(result.success(results))
   },

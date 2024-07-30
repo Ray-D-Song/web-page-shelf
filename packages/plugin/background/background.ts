@@ -55,9 +55,16 @@ onMessage('save-page', async ({ data }) => {
   }
 })
 
-onMessage('get-pages', async ({ data: { filterFolderPath } }) => {
+onMessage('get-pages', async ({ data: { filterFolderPath, search } }) => {
   try {
-    const params = new URLSearchParams({ folder: filterFolderPath ?? '' })
+    // when search is not empty, filterFolderPath should be null
+    if (search) {
+      filterFolderPath = null
+    }
+    const params = new URLSearchParams({
+      folder: filterFolderPath ?? '',
+      search: search ?? '',
+    })
     const pageList = await request(`/pages/get_pages?${params.toString()}`)
     return pageList
   }
