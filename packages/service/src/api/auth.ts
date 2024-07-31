@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { sign } from 'hono/jwt'
 import { setCookie } from 'hono/cookie'
+import bcrypt from 'bcrypt'
 import { HonoTypeUserInformation } from '@/constants/binding'
 import result from '@/utils/result'
 import { User } from '@/sql/types'
@@ -35,9 +36,10 @@ app.post(
       return c.json(result.error(500, formData))
     }
     const { email, password } = formData
+    const encryptedPassword = await bcrypt.hash(password, 10)
     const sql = c.env.DB
       .prepare(`INSERT INTO users (email, password) VALUES (?, ?)`)
-      .bind(email, password)
+      .bind(email, encryptedPassword)
     try {
       const user = await sql.run()
       if (user.error) {
@@ -74,12 +76,16 @@ app.post(
       return c.json(result.error(500, formData))
     }
     const sql = c.env.DB
-      .prepare(`SELECT * FROM users WHERE email = ? AND password = ?`)
-      .bind(formData.email, formData.password)
+      .prepare(`SELECT * FROM users WHERE email = ?`)
+      .bind(formData.email)
 
     try {
       const user = await sql.first<User>()
       if (!user) {
+        return c.json(result.error(401, 'Invalid email or password'))
+      }
+      const isPasswordMatch = await bcrypt.compare(formData.password, user.password)
+      if (!isPasswordMatch) {
         return c.json(result.error(401, 'Invalid email or password'))
       }
       const payload = {
