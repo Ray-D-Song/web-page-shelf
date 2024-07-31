@@ -36,6 +36,13 @@ app.post(
       return c.json(result.error(500, formData))
     }
     const { email, password } = formData
+    const selectUser = c.env.DB
+      .prepare(`SELECT * FROM users WHERE email = ?`)
+      .bind(email)
+    const user = await selectUser.first<User>()
+    if (user) {
+      return c.json(result.error(400, 'Email already exists'))
+    }
     const encryptedPassword = await bcrypt.hash(password, 10)
     const sql = c.env.DB
       .prepare(`INSERT INTO users (email, password) VALUES (?, ?)`)
