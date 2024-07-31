@@ -9,7 +9,7 @@ app.get(
   '/get_user_info',
   async (c) => {
     const userInfo = c.get('userInfo')
-    const userResult = await c.env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userInfo.id).first() as User
+    const userResult = await c.env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userInfo.id).first<User>()
     if (!userResult) {
       return c.json(result.error(500, 'Failed to get user info'))
     }
