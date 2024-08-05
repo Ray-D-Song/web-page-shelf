@@ -101,11 +101,14 @@ app.post(
       }
       const JWT_SECRET = import.meta.env.MODE === 'development' ? 'dev' : c.env.JWT_SECRET
       const token = await sign(payload, JWT_SECRET)
+      const expirationTtl = 60 * 60 * 24 * 14
       await c.env.KV.put(`token:${user.id}`, token, {
-        expirationTtl: 60 * 60 * 24 * 14,
+        expirationTtl,
       })
       console.log(await c.env.KV.get(`token:${user.id}`))
-      setCookie(c, 'token', token)
+      setCookie(c, 'token', token, {
+        expires: new Date(Date.now() + expirationTtl * 1000),
+      })
       return c.json(result.success({
         id: user.id,
         username: user.username,
