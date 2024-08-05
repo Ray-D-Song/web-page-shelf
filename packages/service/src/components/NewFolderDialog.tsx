@@ -9,7 +9,8 @@ interface NewFolderDialogProps {
 
 function NewFolderDialog({ visible, onClose }: NewFolderDialogProps) {
   const folderList = ['root']
-  userStore.folders.children.forEach((folder) => {
+  // todo root folder
+  userStore.folders.forEach((folder) => {
     folderList.push(folder.name)
     if (folder.children.length > 0) {
       folder.children.forEach((child) => {

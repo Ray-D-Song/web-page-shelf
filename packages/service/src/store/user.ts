@@ -1,27 +1,35 @@
+import { UserInfo } from '@web-page-shelf/global'
 import { proxy, subscribe } from 'valtio'
+import { deleteCookie } from '@/utils/cookie'
 
-interface Folder {
-  name: string
-  children: Folder[]
-}
+const userInfo = JSON.parse(localStorage.getItem('user') ?? `{
+  "id": -1,
+  "username": "",
+  "email": "",
+  "folders": []
+}`)
 
-interface UserStore {
-  id: number
-  username: string
-  email: string
-  folders: {
-    name: 'root'
-    children: Folder[]
-  }
+interface UserStore extends UserInfo {
+  isLogin: boolean
+  logout: () => void
 }
 
 const userStore = proxy(
-  JSON.parse(localStorage.getItem('user') ?? `{
-    "id": 0,
-    "username": "",
-    "email": "",
-    "folders": {"name": "root", "children": []}
-  }`) as UserStore,
+  {
+    ...userInfo,
+    get isLogin() {
+      return userStore.id !== -1
+    },
+    logout: () => {
+      Object.assign(userStore, {
+        id: -1,
+        username: '',
+        email: '',
+        folders: [],
+      })
+      deleteCookie('token')
+    },
+  } as UserStore,
 )
 
 subscribe(userStore, () => {

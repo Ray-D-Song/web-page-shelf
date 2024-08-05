@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react'
+import { useState } from 'react'
 import NewFolderDialog from './NewFolderDialog'
 import { userStore } from '@/store/user'
 
@@ -8,6 +8,10 @@ interface SideBarProps {
 
 function SideBar({ className }: SideBarProps) {
   const [dialogVisible, setDialogVisible] = useState(false)
+
+  function handleLogout() {
+    userStore.logout()
+  }
 
   return (
     <div className={`${className} flex`}>
@@ -97,6 +101,7 @@ function SideBar({ className }: SideBarProps) {
           <form action="#">
             <button
               type="submit"
+              onClick={handleLogout}
               className="group relative w-full flex justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
             >
               <svg
@@ -135,9 +140,9 @@ function SideBar({ className }: SideBarProps) {
                 Root
               </a>
             </li>
-
+            {/* todo root foler */}
             {
-              userStore.folders.children.map(folder => (
+              userStore.folders.map(folder => (
                 <li key={folder.name}>
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary
