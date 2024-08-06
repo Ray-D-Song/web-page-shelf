@@ -27,7 +27,7 @@ function fetcher<T>(url: string, {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(res => processResponse(res))
+      }).then(res => processResponse<T>(res))
     }
     return fetch(url, {
       method,
